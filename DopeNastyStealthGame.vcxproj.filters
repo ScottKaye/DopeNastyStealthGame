@@ -1,0 +1,106 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="src\Level1.cpp">
+      <Filter>Levels</Filter>
+    </ClCompile>
+    <ClCompile Include="src\LevelManager.cpp">
+      <Filter>Levels</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Entity.cpp">
+      <Filter>Game Elements</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Player.cpp">
+      <Filter>Game Elements</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Animation.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="src\System.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Texture.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\Level1.h">
+      <Filter>Levels</Filter>
+    </ClInclude>
+    <ClInclude Include="include\LevelManager.h">
+      <Filter>Levels</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Entity.h">
+      <Filter>Game Elements</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Player.h">
+      <Filter>Game Elements</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Animation.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Constants.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Game.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Random.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="include\System.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Text.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Texture.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Timer.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Util.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Vec2.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Wall.h">
+      <Filter>Game Elements</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Spatial.h">
+      <Filter>System\Game Stuff</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Team.h">
+      <Filter>System\Game Stuff</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Powerup.h">
+      <Filter>Game Elements</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Level.h">
+      <Filter>Levels</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include=".gitignore" />
+    <None Include="libfreetype-6.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Levels">
+      <UniqueIdentifier>{5934642e-0715-454f-b936-c50a2bf5c3d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game Elements">
+      <UniqueIdentifier>{50a9d0f6-432d-434c-af4a-9d40441de153}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System">
+      <UniqueIdentifier>{34b96ed8-bfd8-4a85-941b-4ce738d15afe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System\Game Stuff">
+      <UniqueIdentifier>{9313295a-7b84-4c3c-a5e0-e4432e50b1f1}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
