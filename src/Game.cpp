@@ -4,6 +4,7 @@
 #include "Constants.h"
 #include "Game.h"
 #include "Text.h"
+#include "Level.h"
 
 // Resolve externs
 Texture*				Game::PlayerTex;
@@ -13,6 +14,7 @@ Player*					Game::MainPlayer;
 
 // Private globals
 bool showHitboxes = true;
+Level* level;
 
 Game::Game()
 { }
@@ -21,7 +23,7 @@ bool Game::Initialize() {
 	std::cout << "## Initializing game." << std::endl;
 
 	// Set some window properties
-	System::SetWindowSize(800, 600);
+	System::SetWindowSize(50 * 16, 50 * 12);
 	System::SetWindowTitle("Dope-Nasty Stealth Game");
 
 	// Get renderer
@@ -46,6 +48,9 @@ bool Game::Initialize() {
 	mFontSmall = TTF_OpenFont("media/VISITOR.FON", 0);
 	mFontLarge = TTF_OpenFont("media/visitor1.ttf", 28);
 
+	// Start level
+	level = new Level("levels/1");
+
 	return true;
 }
 
@@ -57,6 +62,9 @@ void Game::Shutdown() {
 		delete Entities[i];
 	}
 	Entities.clear();
+
+	// Delete level
+	delete level;
 
 	// Delete spatial hash map
 	delete mSpatial;
@@ -155,6 +163,9 @@ void Game::Draw(SDL_Renderer* renderer) {
 		Entities[i]->Draw(renderer);
 	}
 
+	// Draw level
+	level->Draw(renderer);
+
 	//
 	// Top level
 	// UI
@@ -163,6 +174,9 @@ void Game::Draw(SDL_Renderer* renderer) {
 }
 
 void Game::Update(float dt) {
+	// Update level
+	level->Update(dt, MainPlayer);
+
 	// Reset spatial hashmap
 	mSpatial->ClearCells();
 	mSpatial->Register(MainPlayer);

@@ -89,14 +89,14 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\Level1.cpp" />
-    <ClCompile Include="src\LevelManager.cpp" />
+    <ClCompile Include="Level.cpp" />
     <ClCompile Include="src\Animation.cpp" />
     <ClCompile Include="src\Entity.cpp" />
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\Player.cpp" />
     <ClCompile Include="src\System.cpp" />
     <ClCompile Include="src\Texture.cpp" />
+    <ClCompile Include="Wall.cpp" />
     <ClInclude Include="include\Animation.h" />
     <ClInclude Include="include\Constants.h" />
     <ClInclude Include="include\Entity.h" />
@@ -112,8 +112,6 @@
     <ClInclude Include="include\Player.h" />
     <ClInclude Include="include\Texture.h" />
     <ClInclude Include="include\Level.h" />
-    <ClInclude Include="include\Level1.h" />
-    <ClInclude Include="include\LevelManager.h" />
     <ClInclude Include="include\Powerup.h" />
     <ClInclude Include="include\Wall.h" />
   </ItemGroup>

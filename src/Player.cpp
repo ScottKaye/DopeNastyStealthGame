@@ -36,6 +36,8 @@ bool Player::Update(float dt) {
 	Center.x += Velocity.x;
 	Center.y += Velocity.y;
 
+	// TODO http://gamedev.stackexchange.com/a/72510
+
 	return false;
 }
 

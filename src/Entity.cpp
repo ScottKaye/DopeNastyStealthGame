@@ -11,7 +11,7 @@ Entity::Entity(const Vec2& pos, const Texture* tex, Team team)
 	, Center(pos)
 	, mTeam(team)
 	, mId(mNextId++)
-	, mHitRadius(15)
+	, mHitRadius(20)
 {
 }
 

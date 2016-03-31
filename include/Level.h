@@ -1,10 +1,19 @@
 #pragma once
 
 #include <vector>
+#include <SDL.h>
 
+#include "Player.h"
 #include "Wall.h"
 
 class Level {
 public:
-	std::vector<Wall> Walls;
+	Level() {};
+	Level(const std::string& filename);
+	~Level();
+
+	std::vector<Wall*> Walls;
+
+	void Draw(SDL_Renderer* renderer);
+	void Update(float dt, Player* player);
 };
