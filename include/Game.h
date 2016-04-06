@@ -10,6 +10,7 @@
 #include "Random.h"
 #include "Team.h"
 #include "Spatial.h"
+#include "Level.h"
 
 class Game {
 	Spatial*				mSpatial;
@@ -46,4 +47,5 @@ public:
 
 	static Player*				    MainPlayer;
 	static std::vector<Entity*>		Entities;
+	static Level*					CurrentLevel;
 };

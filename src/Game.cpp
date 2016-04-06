@@ -4,17 +4,16 @@
 #include "Constants.h"
 #include "Game.h"
 #include "Text.h"
-#include "Level.h"
 
 // Resolve externs
 Texture*				Game::PlayerTex;
 Texture*				Game::EnemyTex;
 std::vector<Entity*>	Game::Entities;
 Player*					Game::MainPlayer;
+Level*					Game::CurrentLevel;
 
 // Private globals
 bool showHitboxes = true;
-Level* level;
 
 Game::Game()
 { }
@@ -49,7 +48,7 @@ bool Game::Initialize() {
 	mFontLarge = TTF_OpenFont("media/visitor1.ttf", 28);
 
 	// Start level
-	level = new Level("levels/1");
+	CurrentLevel = new Level("levels/1");
 
 	return true;
 }
@@ -64,7 +63,7 @@ void Game::Shutdown() {
 	Entities.clear();
 
 	// Delete level
-	delete level;
+	delete CurrentLevel;
 
 	// Delete spatial hash map
 	delete mSpatial;
@@ -131,6 +130,23 @@ void Game::Draw(SDL_Renderer* renderer) {
 		}
 	}
 
+	//
+	// Entities
+	//
+
+	// Draw entities
+	for (unsigned i = 0; i < Entities.size(); ++i) {
+		Entities[i]->Draw(renderer);
+	}
+
+	// Draw level
+	CurrentLevel->Draw(renderer);
+
+	//
+	// Top level
+	// UI
+	//
+
 	// Hitboxes
 	if (showHitboxes) {
 
@@ -153,29 +169,11 @@ void Game::Draw(SDL_Renderer* renderer) {
 			}
 		}
 	}
-
-	//
-	// Entities
-	//
-
-	// Draw entities
-	for (unsigned i = 0; i < Entities.size(); ++i) {
-		Entities[i]->Draw(renderer);
-	}
-
-	// Draw level
-	level->Draw(renderer);
-
-	//
-	// Top level
-	// UI
-	//
-
 }
 
 void Game::Update(float dt) {
 	// Update level
-	level->Update(dt, MainPlayer);
+	CurrentLevel->Update(dt, MainPlayer);
 
 	// Reset spatial hashmap
 	mSpatial->ClearCells();
