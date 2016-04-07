@@ -5,10 +5,39 @@
 #include "Entity.h"
 #include "Vec2.h"
 
+enum WallPlane {
+	All,
+	Left,
+	Right,
+	Top,
+	Bottom,
+	TopBottom,
+	LeftRight,
+	Air
+};
+
+class WallPlaneCollisions {
+public:
+	static bool CollidesDown(WallPlane p) {
+		return p == WallPlane::All || p == WallPlane::TopBottom || p == WallPlane::Top;
+	}
+	static bool CollidesUp(WallPlane p) {
+		return p == WallPlane::All || p == WallPlane::TopBottom || p == WallPlane::Bottom;
+	}
+	static bool CollidesLeft(WallPlane p) {
+		return p == WallPlane::All || p == WallPlane::LeftRight || p == WallPlane::Right;
+	}
+	static bool CollidesRight(WallPlane p) {
+		return p == WallPlane::All || p == WallPlane::LeftRight || p == WallPlane::Left;
+	}
+};
+
 class Wall {
 	SDL_Rect mRect;
+	WallPlane mPlane;
+
 public:
-	Wall(SDL_Rect rect) : mRect(rect) { }
+	Wall(SDL_Rect rect, WallPlane plane) : mRect(rect), mPlane(plane) { }
 
 	SDL_Rect GetRect() const { return mRect; }
 	void Draw(SDL_Renderer* renderer);
@@ -17,5 +46,5 @@ public:
 	int Right() const { return mRect.x + mRect.w; }
 	int Top() const { return mRect.y; }
 	int Bottom() const { return mRect.y + mRect.h; }
-	Vec2 Center() const { return Vec2(mRect.x + mRect.w / 2, mRect.y + mRect.h / 2); }
+	WallPlane Plane() const { return mPlane; }
 };

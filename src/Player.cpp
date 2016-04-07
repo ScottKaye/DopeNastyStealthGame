@@ -37,11 +37,8 @@ bool Player::Update(float dt) {
 		Velocity.y += mSpeed * dt;
 	}
 
-	Velocity.x *= 0.9f;
-	Velocity.y *= 0.9f;
-
-	Center.x += Velocity.x;
-	Center.y += Velocity.y;
+	bool up, down, left, right;
+	up = down = left = right = true;
 
 	unsigned radius = HitRadius();
 
@@ -50,37 +47,41 @@ bool Player::Update(float dt) {
 	// Check collisions against all walls
 	for (Wall* w : Game::CurrentLevel->Walls) {
 		SDL_Rect overlap;
-		if (SDL_IntersectRect(&w->GetRect(), &hitbox, &overlap)) {
-			if (abs(overlap.w) < abs(overlap.h)) {
-				// Intersection left or right
+		WallPlane p = w->Plane();
 
-				if (Velocity.x < 0) {
-					// Moving left
-					//Center.x = overlap.x + overlap.w + radius;
-					Center.x += overlap.w;
+		if (SDL_IntersectRect(&w->GetRect(), &hitbox, &overlap)) {
+
+			if (overlap.w * overlap.h < 50) continue;
+
+			if (abs(overlap.w) < abs(overlap.h)) {
+				if (Velocity.x < 0 && WallPlaneCollisions::CollidesLeft(p)) {
+					left = false;
 				}
-				else {
-					// Moving right
-					//Center.x = overlap.x - radius;
-					Center.x -= overlap.w;
+
+				if (Velocity.x > 0 && WallPlaneCollisions::CollidesRight(p)) {
+					right = false;
 				}
 			}
 			else {
-				// Top or bottom
-
-				if (Velocity.y < 0) {
-					// Moving up
-					//Center.y = overlap.y + overlap.h + radius;
-					Center.y += overlap.h;
+				if (Velocity.y < 0 && WallPlaneCollisions::CollidesUp(p)) {
+					up = false;
 				}
-				else {
-					// Moving down
-					//Center.y = overlap.y - radius;
-					Center.y -= overlap.h;
+
+				if (Velocity.y > 0 && WallPlaneCollisions::CollidesDown(p)) {
+					down = false;
 				}
 			}
 		}
 	}
+
+	Velocity.x *= 0.9f;
+	Velocity.y *= 0.9f;
+
+	if ((Velocity.x > 0 && right) || (Velocity.x < 0 && left))
+		Center.x += Velocity.x;
+
+	if ((Velocity.y > 0 && down) || (Velocity.y < 0 && up))
+		Center.y += Velocity.y;
 
 	return false;
 }

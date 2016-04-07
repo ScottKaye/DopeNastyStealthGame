@@ -1,4 +1,4 @@
-#include <iostream>
+﻿#include <iostream>
 #include <fstream>
 
 #include "Level.h"
@@ -31,13 +31,55 @@ Level::Level(const std::string& filename) {
 	int row = 0, col = 0;
 	for (std::string line : lines) {
 		for (char c : line) {
+			WallPlane p = WallPlane::Air;
+
 			switch (c) {
 			case '#':
-				Walls.push_back(new Wall({ col, row, 50, 50 }));
+				Walls.push_back(new Wall({ col, row, 50, 50 }, WallPlane::Air));
 				break;
+			case ']':
+				Walls.push_back(new Wall({ col, row, 50, 10 }, WallPlane::Top));
+				Walls.push_back(new Wall({ col + 40, row, 10, 50 }, WallPlane::Right));
+				break;
+			case '[':
+				Walls.push_back(new Wall({ col, row, 50, 10 }, WallPlane::Top));
+				Walls.push_back(new Wall({ col, row, 10, 50 }, WallPlane::Left));
+				break;
+			case '{':
+				Walls.push_back(new Wall({ col, row + 40, 50, 10 }, WallPlane::Bottom));
+				Walls.push_back(new Wall({ col, row, 10, 50 }, WallPlane::Left));
+				break;
+			case '}':
+				Walls.push_back(new Wall({ col, row + 40, 50, 10 }, WallPlane::Bottom));
+				Walls.push_back(new Wall({ col + 40, row, 10, 50 }, WallPlane::Right));
+				break;
+			case '>':
+				Walls.push_back(new Wall({ col + 40, row, 10, 50 }, WallPlane::Right));
+				break;
+			case '<':
+				Walls.push_back(new Wall({ col, row, 10, 50 }, WallPlane::Left));
+				break;
+			case '|':
+				Walls.push_back(new Wall({ col, row, 10, 50 }, WallPlane::Left));
+				Walls.push_back(new Wall({ col + 40, row, 10, 50 }, WallPlane::Right));
+				break;
+			case '=':
+				Walls.push_back(new Wall({ col, row, 50, 10 }, WallPlane::Top));
+				Walls.push_back(new Wall({ col, row + 40, 50, 10 }, WallPlane::Bottom));
+				break;
+			default:
+				std::cout << "Unknown character " << c << std::endl;
 			}
+
+			/*
+			if (p != WallPlane::Air) {
+				Walls.push_back(new Wall({ col, row, 50, 50 }, p));
+			}
+			*/
+
 			col += 50;
 		}
+
 		col = 0;
 		row += 50;
 	}

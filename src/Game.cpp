@@ -114,8 +114,8 @@ void Game::Draw(SDL_Renderer* renderer) {
 			op = 35;
 		}
 
-		float row = std::floor(ent->Center.y / size);
-		float col = std::floor(ent->Center.x / size);
+		int row = (int)std::floor(ent->Center.y / size);
+		int col = (int)std::floor(ent->Center.x / size);
 
 		// Light up surrounding squares a little bit as well
 		for (int y = row - 1; y <= row + 1; ++y) {
@@ -162,10 +162,10 @@ void Game::Draw(SDL_Renderer* renderer) {
 		int density = 50;
 		for (Entity* ent : Entities) {
 			for (int p = 0; p < density; p++) {
-				float x = ent->Center.x + ent->HitRadius() * std::cos(2 * M_PI * p / density);
-				float y = ent->Center.y + ent->HitRadius() * std::sin(2 * M_PI * p / density);
+				float x = ent->Center.x + ent->HitRadius() * std::cos(2 * (float)M_PI * p / density);
+				float y = ent->Center.y + ent->HitRadius() * std::sin(2 * (float)M_PI * p / density);
 
-				SDL_RenderDrawPoint(renderer, x, y);
+				SDL_RenderDrawPoint(renderer, (int)x, (int)y);
 			}
 		}
 	}
