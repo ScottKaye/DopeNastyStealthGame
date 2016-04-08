@@ -25,6 +25,15 @@
     <ClCompile Include="Level.cpp">
       <Filter>Levels</Filter>
     </ClCompile>
+    <ClCompile Include="src\Button.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MainMenu.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Gameplay.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Entity.h">
@@ -78,6 +87,18 @@
     <ClInclude Include="include\Level.h">
       <Filter>Levels</Filter>
     </ClInclude>
+    <ClInclude Include="include\MainMenu.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Button.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Gameplay.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="include\GameState.h">
+      <Filter>UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />
@@ -95,6 +116,9 @@
     </Filter>
     <Filter Include="System\Game Stuff">
       <UniqueIdentifier>{9313295a-7b84-4c3c-a5e0-e4432e50b1f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI">
+      <UniqueIdentifier>{00ff13f4-b463-4ca3-b837-4430fd158b27}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

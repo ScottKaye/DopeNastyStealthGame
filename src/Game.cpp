@@ -50,6 +50,8 @@ bool Game::Initialize() {
 	// Start level
 	CurrentLevel = new Level("levels/1");
 
+
+
 	return true;
 }
 
@@ -259,4 +261,14 @@ void Game::Reset() {
 	Entities.clear();
 
 	Initialize();
+}
+
+void Game::EnterMainMenu()
+{
+	mCurrentState = mMainMenuState;
+}
+
+void Game::EnterGameplay()
+{
+	mCurrentState = mGameplayState;
 }
