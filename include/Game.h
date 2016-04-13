@@ -16,15 +16,9 @@
 
 class Game {
 	Spatial*				mSpatial;
-	TTF_Font*				mFontSmall;
-	TTF_Font*				mFontLarge;
-
 	Gameplay*               mGameplayState;
 	MainMenu*               mMainMenuState;
-
 	GameState*              mCurrentState;
-
-
 
 public:
 	Game();

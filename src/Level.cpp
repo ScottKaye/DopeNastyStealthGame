@@ -3,6 +3,7 @@
 
 #include "Level.h"
 #include "System.h"
+#include "Game.h"
 
 Level::Level(const std::string& filename) {
 	std::string fWalls = filename + "-walls.txt";
@@ -103,7 +104,7 @@ Level::Level(const std::string& filename) {
 	tp.push_back(EnemyAction::EA_TurnRight);
 	tp.push_back(EnemyAction::EA_TurnRight);
 
-	Enemy* e = new Enemy(Vec2((50 * 2) - 25, (50 * 3) - 25), NULL);
+	Enemy* e = new Enemy(Vec2((50 * 2) - 25, (50 * 3) - 25), Game::EnemyTex);
 	e->SetPath(tp);
 	Enemies.push_back(e);
 }

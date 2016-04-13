@@ -43,14 +43,12 @@ bool Game::Initialize() {
 
 	Entities.push_back(MainPlayer);
 
-	// Load fonts and UI
-	mFontSmall = TTF_OpenFont("media/VISITOR.FON", 0);
-	mFontLarge = TTF_OpenFont("media/visitor1.ttf", 28);
-
 	// Start level
 	CurrentLevel = new Level("levels/1");
 
-
+	for (Enemy* e : CurrentLevel->Enemies) {
+		Entities.push_back(e);
+	}
 
 	return true;
 }
@@ -71,10 +69,6 @@ void Game::Shutdown() {
 	delete mSpatial;
 
 	// Release audio
-
-	// Close fonts
-	TTF_CloseFont(mFontSmall);
-	TTF_CloseFont(mFontLarge);
 
 	// Destroy all textures
 	Texture::Destroy(PlayerTex);
@@ -161,7 +155,7 @@ void Game::Draw(SDL_Renderer* renderer) {
 
 		// Hit radiuses
 		SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);
-		int density = 50;
+		int density = 25;
 		for (Entity* ent : Entities) {
 			for (int p = 0; p < density; p++) {
 				float x = ent->Center.x + ent->HitRadius() * std::cos(2 * (float)M_PI * p / density);

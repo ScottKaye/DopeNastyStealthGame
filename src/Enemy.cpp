@@ -4,7 +4,8 @@
 
 Enemy::Enemy(const Vec2& pos, const Texture* tex)
 	: Entity(pos, tex)
-	, mSpeed(2) {
+	, mSpeed(1) {
+	SetHitRadius(10);
 }
 
 Enemy::~Enemy() {

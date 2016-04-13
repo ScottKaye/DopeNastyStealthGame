@@ -28,6 +28,7 @@ public:
 	float                   Top() const { return Center.y - 0.5f * Height(); }
 	float                   Bottom() const { return Center.y + 0.5f * Height(); }
 
+	void					SetHitRadius(unsigned r) { mHitRadius = r; }
 	void                    SetLeft(float x) { Center.x = x + 0.5f * Width(); }
 	void                    SetRight(float x) { Center.x = x - 0.5f * Width(); }
 	void                    SetTop(float y) { Center.y = y + 0.5f * Height(); }
