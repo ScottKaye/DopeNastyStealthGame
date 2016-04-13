@@ -210,9 +210,6 @@ void Game::OnKeyDown(const SDL_KeyboardEvent& kbe) {
 	case SDLK_ESCAPE:
 		System::Quit();
 		break;
-	case SDLK_r:
-		Reset();
-		break;
 	case SDLK_b:
 		showHitboxes = !showHitboxes;
 		break;
@@ -242,13 +239,6 @@ void Game::DestroyEntityById(int id) {
 
 void Game::DestroyPlayer() {
 	// TODO
-}
-
-void Game::Reset() {
-	for (unsigned i = 0; i < Entities.size(); ++i) delete Entities[i];
-	Entities.clear();
-
-	Initialize();
 }
 
 void Game::EnterMainMenu()

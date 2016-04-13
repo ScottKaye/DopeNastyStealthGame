@@ -28,7 +28,6 @@ public:
 
 	void				    Update(float dt);
 	void				    Draw(SDL_Renderer* renderer);
-	void					Reset();
 
 	void				    OnKeyDown(const SDL_KeyboardEvent& kbe);
 	void				    OnKeyUp(const SDL_KeyboardEvent& kbe);
