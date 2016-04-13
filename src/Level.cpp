@@ -86,6 +86,12 @@ void Level::LoadWalls(const std::string& filename) {
 		col = 0;
 		row += 50;
 	}
+
+	// TODO don't hardcode these numbers
+	Walls.push_back(new Wall({ 0, 0, 50 * 16, 5 }, WallPlane::WP_Bottom));
+	Walls.push_back(new Wall({ 0, 50 * 12 - 5, 50 * 16, 5 }, WallPlane::WP_Top));
+	Walls.push_back(new Wall({ 0, 0, 5, 50 * 12 }, WallPlane::WP_Right));
+	Walls.push_back(new Wall({ 50 * 16 - 5, 0, 5, 50 * 12 }, WallPlane::WP_Left));
 }
 
 void Level::LoadPaths(const std::string& filename) {
