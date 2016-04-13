@@ -63,6 +63,12 @@ Level::Level(const std::string& filename) {
 				Walls.push_back(new Wall({ col, row, 10, 50 }, WallPlane::Left));
 				Walls.push_back(new Wall({ col + 40, row, 10, 50 }, WallPlane::Right));
 				break;
+			case '-':
+				Walls.push_back(new Wall({ col, row, 50, 10 }, WallPlane::Bottom));
+				break;
+			case '_':
+				Walls.push_back(new Wall({ col, row + 40, 50, 10 }, WallPlane::Top));
+				break;
 			case '=':
 				Walls.push_back(new Wall({ col, row, 50, 10 }, WallPlane::Top));
 				Walls.push_back(new Wall({ col, row + 40, 50, 10 }, WallPlane::Bottom));

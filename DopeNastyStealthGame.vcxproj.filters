@@ -22,9 +22,6 @@
     <ClCompile Include="Wall.cpp">
       <Filter>Game Elements</Filter>
     </ClCompile>
-    <ClCompile Include="Level.cpp">
-      <Filter>Levels</Filter>
-    </ClCompile>
     <ClCompile Include="src\Button.cpp">
       <Filter>UI</Filter>
     </ClCompile>
@@ -33,6 +30,9 @@
     </ClCompile>
     <ClCompile Include="src\MainMenu.cpp">
       <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Level.cpp">
+      <Filter>Levels</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
