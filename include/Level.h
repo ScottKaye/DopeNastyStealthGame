@@ -8,6 +8,9 @@
 #include "Enemy.h"
 
 class Level {
+	void LoadWalls(const std::string& filename);
+	void LoadPaths(const std::string& filename);
+
 public:
 	Level() {};
 	Level(const std::string& filename);

@@ -1,13 +1,13 @@
 ﻿#include <iostream>
 #include <fstream>
+#include <regex>
 
 #include "Level.h"
 #include "System.h"
 #include "Game.h"
 
-Level::Level(const std::string& filename) {
+void Level::LoadWalls(const std::string& filename) {
 	std::string fWalls = filename + "-walls.txt";
-
 	std::fstream f(fWalls);
 
 	if (!f.good()) {
@@ -22,18 +22,12 @@ Level::Level(const std::string& filename) {
 		lines.push_back(line);
 	}
 
-	int numRows = lines.size();
-	int numCols = lines[0].length();
-
-	// reverse the rows so that bottom is at row 0
 	int tileWidth = 50;
 	int tileHeight = 50;
 
 	int row = 0, col = 0;
 	for (std::string line : lines) {
 		for (char c : line) {
-			WallPlane p = WallPlane::WP_None;
-
 			switch (c) {
 			case '#':
 				Walls.push_back(new Wall({ col, row, 50, 50 }, WallPlane::WP_None));
@@ -80,10 +74,7 @@ Level::Level(const std::string& filename) {
 			case 'r':
 				Walls.push_back(new Wall({ col, row, 90, 50 }, WallPlane::WP_Right));
 				break;
-			default:
-				std::cout << "Unknown character " << c << std::endl;
 			}
-
 
 			col += 50;
 		}
@@ -91,22 +82,63 @@ Level::Level(const std::string& filename) {
 		col = 0;
 		row += 50;
 	}
+}
 
-	// Test path
-	std::vector<EnemyAction> tp = std::vector<EnemyAction>();
+void Level::LoadPaths(const std::string& filename) {
+	std::string fPaths = filename + "-paths.txt";
+	std::fstream f(fPaths);
 
-	tp.push_back(EnemyAction::EA_Forward);
-	tp.push_back(EnemyAction::EA_Forward);
-	tp.push_back(EnemyAction::EA_TurnRight);
-	tp.push_back(EnemyAction::EA_TurnRight);
-	tp.push_back(EnemyAction::EA_Forward);
-	tp.push_back(EnemyAction::EA_Forward);
-	tp.push_back(EnemyAction::EA_TurnRight);
-	tp.push_back(EnemyAction::EA_TurnRight);
+	if (!f.good()) {
+		std::cerr << "*** Error: Failed to open " << fPaths << std::endl;
+		return;
+	}
 
-	Enemy* e = new Enemy(Vec2((50 * 2) - 25, (50 * 3) - 25), Game::EnemyTex);
-	e->SetPath(tp);
-	Enemies.push_back(e);
+	std::vector<std::string> lines;
+	std::string line;
+
+	while (std::getline(f, line)) {
+		lines.push_back(line);
+	}
+
+	std::string pattern = "(\\d+),(\\d+):([A-Z]+)";
+	std::regex rgx(pattern);
+
+	for (std::string line : lines) {
+		std::smatch matches;
+
+		if (std::regex_search(line, matches, rgx)) {
+			float x = atof(matches[0].str().c_str());
+			float y = atof(matches[2].str().c_str());
+
+			Enemy * e = new Enemy(Vec2(x, y), Game::EnemyTex);
+
+			auto actions = std::vector<EnemyAction>();
+			for (char a : matches[3].str()) {
+				switch (a) {
+				case 'F':
+					actions.push_back(EnemyAction::EA_Forward);
+					break;
+				case 'R':
+					actions.push_back(EnemyAction::EA_TurnRight);
+					break;
+				case 'L':
+					actions.push_back(EnemyAction::EA_TurnLeft);
+					break;
+				}
+			}
+
+			e->SetPath(actions);
+			Enemies.push_back(e);
+		}
+		else {
+			std::cout << "Invalid path specified." << std::endl;
+		}
+	}
+}
+
+Level::Level(const std::string& filename) {
+	LoadWalls(filename);
+	LoadPaths(filename);
 }
 
 Level::~Level() {

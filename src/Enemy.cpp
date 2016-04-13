@@ -9,6 +9,7 @@ Enemy::Enemy(const Vec2& pos, const Texture* tex)
 }
 
 Enemy::~Enemy() {
+	mPath.clear();
 }
 
 bool Enemy::Update(float dt) {
@@ -101,12 +102,7 @@ bool Enemy::Update(float dt) {
 	return true;
 }
 
-void Enemy::SetPath(std::vector<EnemyAction> path) {
-	mPath = path;
-}
-
 void Enemy::GoToNextLocation() {
-	std::cout << "going to next location" << std::endl;
 	if (mPathIndex >= mPath.size() - 1) {
 		mPathIndex = 0;
 	}

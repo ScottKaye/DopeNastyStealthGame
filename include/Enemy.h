@@ -10,7 +10,6 @@
 #include "EnemyAction.h"
 
 class Enemy : public Entity {
-
 	EnemyDirection mDir;
 	std::vector<EnemyAction> mPath;
 	Vec2 mTarget = Vec2(0, 0);
@@ -23,6 +22,6 @@ public:
 	~Enemy();
 
 	bool		Update(float dt) override;
-	void		SetPath(std::vector<EnemyAction> path);
+	void		SetPath(std::vector<EnemyAction> path) { mPath = path; }
 	void		GoToNextLocation();
 };

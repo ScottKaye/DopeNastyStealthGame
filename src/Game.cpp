@@ -56,11 +56,8 @@ bool Game::Initialize() {
 void Game::Shutdown() {
 	std::cout << "## Shutting down game." << std::endl;
 
-	// Delete entities
-	for (unsigned i = 0; i < Entities.size(); ++i) {
-		delete Entities[i];
-	}
-	Entities.clear();
+	// Delete player
+	delete MainPlayer;
 
 	// Delete level
 	delete CurrentLevel;
