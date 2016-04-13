@@ -4,7 +4,7 @@
 
 Enemy::Enemy(const Vec2& pos, const Texture* tex)
 	: Entity(pos, tex)
-	, mSpeed(5) {
+	, mSpeed(2) {
 }
 
 Enemy::~Enemy() {
@@ -35,6 +35,7 @@ bool Enemy::Update(float dt) {
 				break;
 			}
 			break;
+		// Rotations are hardcoded rather than using scary math
 		case EnemyAction::EA_TurnLeft:
 			switch (mDir) {
 			default:
@@ -74,19 +75,25 @@ bool Enemy::Update(float dt) {
 		mDone = true;
 	}
 
+	// Get vector for which direction to move towards
 	Vec2 dir = Vec2(mTarget.x - Center.x, mTarget.y - Center.y);
 
+	// Normalize vector
 	float hyp = std::sqrt(dir.x * dir.x + dir.y * dir.y);
 
-	if (hyp < 0.9f) {
+	// If there is so little movement to make, it means we have reached the end of this step
+	// Time to apply the next action
+	if (hyp < 1) {
 		GoToNextLocation();
 	}
 
+	// Do not divide by zero!
 	if (hyp != 0) {
 		dir.x /= hyp;
 		dir.y /= hyp;
 	}
 
+	// Apply movement
 	Center.x += dir.x * mSpeed;
 	Center.y += dir.y * mSpeed;
 

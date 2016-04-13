@@ -97,14 +97,13 @@ Level::Level(const std::string& filename) {
 	tp.push_back(EnemyAction::EA_Forward);
 	tp.push_back(EnemyAction::EA_Forward);
 	tp.push_back(EnemyAction::EA_TurnRight);
-	tp.push_back(EnemyAction::EA_Forward);
-	tp.push_back(EnemyAction::EA_Forward);
 	tp.push_back(EnemyAction::EA_TurnRight);
 	tp.push_back(EnemyAction::EA_Forward);
 	tp.push_back(EnemyAction::EA_Forward);
+	tp.push_back(EnemyAction::EA_TurnRight);
 	tp.push_back(EnemyAction::EA_TurnRight);
 
-	Enemy* e = new Enemy(Vec2(400, 400), NULL);
+	Enemy* e = new Enemy(Vec2((50 * 2) - 25, (50 * 3) - 25), NULL);
 	e->SetPath(tp);
 	Enemies.push_back(e);
 }
