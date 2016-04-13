@@ -73,6 +73,12 @@ Level::Level(const std::string& filename) {
 				Walls.push_back(new Wall({ col, row, 50, 10 }, WallPlane::Top));
 				Walls.push_back(new Wall({ col, row + 40, 50, 10 }, WallPlane::Bottom));
 				break;
+			case 'l':
+				Walls.push_back(new Wall({ col - 40, row, 90, 50 }, WallPlane::Left));
+				break;
+			case 'r':
+				Walls.push_back(new Wall({ col, row, 90, 50 }, WallPlane::Right));
+				break;
 			default:
 				std::cout << "Unknown character " << c << std::endl;
 			}
