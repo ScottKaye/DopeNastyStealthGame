@@ -90,7 +90,8 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Level.cpp" />
+    <ClCompile Include="src\Enemy.cpp" />
+    <ClCompile Include="src\Level.cpp" />
     <ClCompile Include="src\Animation.cpp" />
     <ClCompile Include="src\Button.cpp" />
     <ClCompile Include="src\Entity.cpp" />
@@ -100,7 +101,9 @@
     <ClCompile Include="src\Player.cpp" />
     <ClCompile Include="src\System.cpp" />
     <ClCompile Include="src\Texture.cpp" />
-    <ClCompile Include="Wall.cpp" />
+    <ClCompile Include="src\Wall.cpp" />
+    <ClInclude Include="include\EnemyAction.h" />
+    <ClInclude Include="include\Enemy.h" />
     <ClInclude Include="include\Animation.h" />
     <ClInclude Include="include\Button.h" />
     <ClInclude Include="include\Constants.h" />
@@ -112,7 +115,6 @@
     <ClInclude Include="include\Random.h" />
     <ClInclude Include="include\Spatial.h" />
     <ClInclude Include="include\System.h" />
-    <ClInclude Include="include\Team.h" />
     <ClInclude Include="include\Text.h" />
     <ClInclude Include="include\Timer.h" />
     <ClInclude Include="include\Util.h" />

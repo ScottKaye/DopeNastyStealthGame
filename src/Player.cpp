@@ -15,8 +15,8 @@ float Distance(const Vec2& a, const Vec2& b) {
 }
 
 Player::Player(const Vec2& pos, const Texture* tex)
-	: Entity(pos, tex, Team::Player)
-	, mSpeed(50)
+	: Entity(pos, tex)
+	, mSpeed(20)
 {
 }
 

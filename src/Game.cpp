@@ -204,9 +204,6 @@ void Game::Update(float dt) {
 		for (unsigned j = 0; j < nearby.size(); ++j) {
 			Entity* e2 = nearby[j];
 
-			// Do not collide with self or same team
-			if (e == e2 || e->GetTeam() == e2->GetTeam()) continue;
-
 			// Are we colliding with anything?
 			if (e->CollidesWith(e2)) {
 				// TODO player loses

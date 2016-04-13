@@ -2,7 +2,6 @@
 
 #include "Entity.h"
 #include "Texture.h"
-#include "Team.h"
 #include "Vec2.h"
 #include "Random.h"
 #include "Util.h"

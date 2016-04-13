@@ -19,9 +19,6 @@
     <ClCompile Include="src\Texture.cpp">
       <Filter>System</Filter>
     </ClCompile>
-    <ClCompile Include="Wall.cpp">
-      <Filter>Game Elements</Filter>
-    </ClCompile>
     <ClCompile Include="src\Button.cpp">
       <Filter>UI</Filter>
     </ClCompile>
@@ -31,9 +28,13 @@
     <ClCompile Include="src\MainMenu.cpp">
       <Filter>UI</Filter>
     </ClCompile>
-    <ClCompile Include="Level.cpp">
+    <ClCompile Include="src\Level.cpp">
       <Filter>Levels</Filter>
     </ClCompile>
+    <ClCompile Include="src\Wall.cpp">
+      <Filter>Game Elements</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Enemy.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Entity.h">
@@ -78,9 +79,6 @@
     <ClInclude Include="include\Spatial.h">
       <Filter>System\Game Stuff</Filter>
     </ClInclude>
-    <ClInclude Include="include\Team.h">
-      <Filter>System\Game Stuff</Filter>
-    </ClInclude>
     <ClInclude Include="include\Powerup.h">
       <Filter>Game Elements</Filter>
     </ClInclude>
@@ -98,6 +96,10 @@
     </ClInclude>
     <ClInclude Include="include\MainMenu.h">
       <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Enemy.h" />
+    <ClInclude Include="include\EnemyAction.h">
+      <Filter>Game Elements</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

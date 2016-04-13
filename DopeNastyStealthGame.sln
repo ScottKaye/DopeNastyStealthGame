@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DopeNastyStealthGame", "DopeNastyStealthGame.vcxproj", "{D98FDA05-3B04-4B6E-8436-EF1E9EDB85B0}"
 EndProject
 Global

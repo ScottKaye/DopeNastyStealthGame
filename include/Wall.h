@@ -6,29 +6,29 @@
 #include "Vec2.h"
 
 enum WallPlane {
-	All,
-	Left,
-	Right,
-	Top,
-	Bottom,
-	TopBottom,
-	LeftRight,
-	Air
+	WP_All,
+	WP_Left,
+	WP_Right,
+	WP_Top,
+	WP_Bottom,
+	WP_TopBottom,
+	WP_LeftRight,
+	WP_None
 };
 
 class WallPlaneCollisions {
 public:
 	static bool CollidesDown(WallPlane p) {
-		return p == WallPlane::All || p == WallPlane::TopBottom || p == WallPlane::Top;
+		return p == WallPlane::WP_All || p == WallPlane::WP_TopBottom || p == WallPlane::WP_Top;
 	}
 	static bool CollidesUp(WallPlane p) {
-		return p == WallPlane::All || p == WallPlane::TopBottom || p == WallPlane::Bottom;
+		return p == WallPlane::WP_All || p == WallPlane::WP_TopBottom || p == WallPlane::WP_Bottom;
 	}
 	static bool CollidesLeft(WallPlane p) {
-		return p == WallPlane::All || p == WallPlane::LeftRight || p == WallPlane::Right;
+		return p == WallPlane::WP_All || p == WallPlane::WP_LeftRight || p == WallPlane::WP_Right;
 	}
 	static bool CollidesRight(WallPlane p) {
-		return p == WallPlane::All || p == WallPlane::LeftRight || p == WallPlane::Left;
+		return p == WallPlane::WP_All || p == WallPlane::WP_LeftRight || p == WallPlane::WP_Left;
 	}
 };
 

@@ -6,10 +6,9 @@
 // Resolve externs
 unsigned Entity::mNextId;
 
-Entity::Entity(const Vec2& pos, const Texture* tex, Team team)
+Entity::Entity(const Vec2& pos, const Texture* tex)
 	: mTex(tex)
 	, Center(pos)
-	, mTeam(team)
 	, mId(mNextId++)
 	, mHitRadius(20)
 {
@@ -17,8 +16,6 @@ Entity::Entity(const Vec2& pos, const Texture* tex, Team team)
 
 // Return true if the entity was destroyed this frame
 bool Entity::Update(float dt) {
-	// "Dead" entities are in limbo
-
 	Center.x += Velocity.x * dt;
 	Center.y += Velocity.y * dt;
 
@@ -43,12 +40,12 @@ void Entity::Draw(SDL_Renderer* renderer) const {
 	else {
 		// Draw a placeholder
 		SDL_Rect screenRect;
-		screenRect.w = 64;
-		screenRect.h = 64;
+		screenRect.w = 25;
+		screenRect.h = 25;
 		screenRect.x = (int)(Center.x - screenRect.w / 2);
 		screenRect.y = (int)(Center.y - screenRect.h / 2);
 
-		SDL_SetRenderDrawColor(renderer, 255, 0, 255, 255);
+		SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
 		SDL_RenderFillRect(renderer, &screenRect);
 	}
 }

@@ -9,17 +9,14 @@
 
 class Entity {
 	const Texture*			mTex;
-	Team					mTeam;
 	unsigned				mId;
 	static unsigned			mNextId;
-	std::vector<std::pair<int, int>> mPath;
 	unsigned				mHitRadius;
 
 public:
-	Entity(const Vec2& pos, const Texture* tex, Team team);
+	Entity(const Vec2& pos, const Texture* tex);
 
 	unsigned				GetId() const { return mId; }
-	Team					GetTeam() const { return mTeam; }
 
 	Vec2					Center;
 	Vec2					Velocity;

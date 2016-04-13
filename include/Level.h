@@ -5,6 +5,7 @@
 
 #include "Player.h"
 #include "Wall.h"
+#include "Enemy.h"
 
 class Level {
 public:
@@ -13,6 +14,7 @@ public:
 	~Level();
 
 	std::vector<Wall*> Walls;
+	std::vector<Enemy*> Enemies;
 
 	void Draw(SDL_Renderer* renderer);
 	void Update(float dt, Player* player);
