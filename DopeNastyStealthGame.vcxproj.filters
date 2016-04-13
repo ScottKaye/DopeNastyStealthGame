@@ -28,10 +28,10 @@
     <ClCompile Include="src\Button.cpp">
       <Filter>UI</Filter>
     </ClCompile>
-    <ClCompile Include="src\MainMenu.cpp">
+    <ClCompile Include="src\Gameplay.cpp">
       <Filter>UI</Filter>
     </ClCompile>
-    <ClCompile Include="src\Gameplay.cpp">
+    <ClCompile Include="src\MainMenu.cpp">
       <Filter>UI</Filter>
     </ClCompile>
   </ItemGroup>
@@ -87,9 +87,6 @@
     <ClInclude Include="include\Level.h">
       <Filter>Levels</Filter>
     </ClInclude>
-    <ClInclude Include="include\MainMenu.h">
-      <Filter>UI</Filter>
-    </ClInclude>
     <ClInclude Include="include\Button.h">
       <Filter>UI</Filter>
     </ClInclude>
@@ -99,10 +96,12 @@
     <ClInclude Include="include\GameState.h">
       <Filter>UI</Filter>
     </ClInclude>
+    <ClInclude Include="include\MainMenu.h">
+      <Filter>UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />
-    <None Include="libfreetype-6.dll" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Levels">

@@ -4,7 +4,6 @@
 #include <SDL.h>
 #include <SDL_image.h>
 #include <SDL_mixer.h>
-#include <SDL_ttf.h>
 
 namespace System {
 	SDL_Window*     GetWindow();

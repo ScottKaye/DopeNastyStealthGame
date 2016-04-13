@@ -125,13 +125,7 @@ int main(int argc, char** argv) {
 		return EXIT_FAILURE;
 	}
 
-	Mix_AllocateChannels(64);
-
-	// Initialize TTF library
-	if (TTF_Init() == -1) {
-		std::cerr << "*** Failed to initialize SDL_ttf: " << TTF_GetError() << std::endl;
-		return EXIT_FAILURE;
-	}
+	Mix_AllocateChannels(8);
 
 	// Create a window
 	g_WindowWidth = 800;
@@ -221,7 +215,6 @@ int main(int argc, char** argv) {
 
 	// Cleanup
 	game.Shutdown();
-	TTF_Quit();
 	IMG_Quit();
 	Mix_Quit();
 	SDL_Quit();

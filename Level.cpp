@@ -71,11 +71,6 @@ Level::Level(const std::string& filename) {
 				std::cout << "Unknown character " << c << std::endl;
 			}
 
-			/*
-			if (p != WallPlane::Air) {
-				Walls.push_back(new Wall({ col, row, 50, 50 }, p));
-			}
-			*/
 
 			col += 50;
 		}

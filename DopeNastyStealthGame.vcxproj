@@ -63,7 +63,8 @@
       <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_mixer.lib;SDL2_image.lib;SDL2_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>copy /Y "$(SolutionDir)libfreetype-6.dll" "$(TargetDir)\libfreetype-6.dll"</Command>
+      <Command>
+      </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -91,16 +92,23 @@
   <ItemGroup>
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="src\Animation.cpp" />
+    <ClCompile Include="src\Button.cpp" />
     <ClCompile Include="src\Entity.cpp" />
     <ClCompile Include="src\Game.cpp" />
+    <ClCompile Include="src\Gameplay.cpp" />
+    <ClCompile Include="src\MainMenu.cpp" />
     <ClCompile Include="src\Player.cpp" />
     <ClCompile Include="src\System.cpp" />
     <ClCompile Include="src\Texture.cpp" />
     <ClCompile Include="Wall.cpp" />
     <ClInclude Include="include\Animation.h" />
+    <ClInclude Include="include\Button.h" />
     <ClInclude Include="include\Constants.h" />
     <ClInclude Include="include\Entity.h" />
     <ClInclude Include="include\Game.h" />
+    <ClInclude Include="include\Gameplay.h" />
+    <ClInclude Include="include\GameState.h" />
+    <ClInclude Include="include\MainMenu.h" />
     <ClInclude Include="include\Random.h" />
     <ClInclude Include="include\Spatial.h" />
     <ClInclude Include="include\System.h" />
@@ -117,7 +125,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />
-    <None Include="libfreetype-6.dll" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
