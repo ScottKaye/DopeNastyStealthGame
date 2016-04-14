@@ -114,8 +114,7 @@ void Level::LoadPaths(const std::string& filename) {
 		lines.push_back(line);
 	}
 
-	std::string pattern = "(\\d+),(\\d+):([A-Z]+)";
-	std::regex rgx(pattern);
+	std::regex rgx("(\\d+),(\\d+):([A-Z]):([A-Z]+)");
 
 	for (std::string line : lines) {
 		std::smatch matches;
@@ -126,8 +125,34 @@ void Level::LoadPaths(const std::string& filename) {
 
 			Enemy * e = new Enemy(Vec2(x, y), Game::EnemyTex);
 
+			EnemyDirection initialDir;
+			std::string wat0 = matches[0];
+			std::string wat1 = matches[1];
+			std::string wat2 = matches[2];
+			std::string wat3 = matches[3];
+			std::string wat4 = matches[4];
+			std::string wat5 = matches[5];
+
+			switch (matches[3].str()[0]) {
+			default:
+			case 'U':
+				initialDir = EnemyDirection::ED_Up;
+				break;
+			case 'R':
+				initialDir = EnemyDirection::ED_Right;
+				break;
+			case 'D':
+				initialDir = EnemyDirection::ED_Down;
+				break;
+			case 'L':
+				initialDir = EnemyDirection::ED_Left;
+				break;
+			}
+
+			e->SetDirection(initialDir);
+
 			auto actions = std::vector<EnemyAction>();
-			for (char a : matches[3].str()) {
+			for (char a : matches[4].str()) {
 				switch (a) {
 				case 'F':
 					actions.push_back(EnemyAction::EA_Forward);

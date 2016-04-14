@@ -22,6 +22,7 @@ public:
 	~Enemy();
 
 	bool		Update(float dt) override;
+	void		SetDirection(EnemyDirection dir) { mDir = dir; }
 	void		SetPath(std::vector<EnemyAction> path) { mPath = path; }
 	void		GoToNextLocation();
 };
