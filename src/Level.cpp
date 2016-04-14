@@ -132,12 +132,6 @@ void Level::LoadPaths(const std::string& filename) {
 			Enemy * e = new Enemy(Vec2(x, y), Game::EnemyTex);
 
 			EnemyDirection initialDir;
-			std::string wat0 = matches[0];
-			std::string wat1 = matches[1];
-			std::string wat2 = matches[2];
-			std::string wat3 = matches[3];
-			std::string wat4 = matches[4];
-			std::string wat5 = matches[5];
 
 			switch (matches[3].str()[0]) {
 			default:
