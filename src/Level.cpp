@@ -51,25 +51,29 @@ void Level::LoadWalls(const std::string& filename) {
 			case '>':
 				Walls.push_back(new Wall({ col + 40, row, 10, 50 }, WallPlane::WP_Right));
 				Walls.push_back(new Wall({ col, row, 50, 10 }, WallPlane::WP_Top));
+				Walls.push_back(new Wall({ col, row, 50, 50 }, WallPlane::WP_None));
 				Walls.push_back(new Wall({ col, row + 40, 50, 10 }, WallPlane::WP_Bottom));
 				break;
 			case '<':
 				Walls.push_back(new Wall({ col, row, 10, 50 }, WallPlane::WP_Left));
 				Walls.push_back(new Wall({ col, row, 50, 10 }, WallPlane::WP_Top));
+				Walls.push_back(new Wall({ col, row, 50, 50 }, WallPlane::WP_None));
 				Walls.push_back(new Wall({ col, row + 40, 50, 10 }, WallPlane::WP_Bottom));
 				break;
 			case '|':
 				Walls.push_back(new Wall({ col, row, 10, 50 }, WallPlane::WP_Left));
+				Walls.push_back(new Wall({ col, row, 50, 50 }, WallPlane::WP_None));
 				Walls.push_back(new Wall({ col + 40, row, 10, 50 }, WallPlane::WP_Right));
 				break;
 			case '-':
-				Walls.push_back(new Wall({ col, row, 50, 10 }, WallPlane::WP_Bottom));
+				Walls.push_back(new Wall({ col, row - 10, 50, 10 }, WallPlane::WP_Bottom));
 				break;
 			case '_':
-				Walls.push_back(new Wall({ col, row + 40, 50, 10 }, WallPlane::WP_Top));
+				Walls.push_back(new Wall({ col, row + 50, 50, 10 }, WallPlane::WP_Top));
 				break;
 			case '=':
 				Walls.push_back(new Wall({ col, row, 50, 10 }, WallPlane::WP_Top));
+				Walls.push_back(new Wall({ col, row, 50, 50 }, WallPlane::WP_None));
 				Walls.push_back(new Wall({ col, row + 40, 50, 10 }, WallPlane::WP_Bottom));
 				break;
 			case 'l':
