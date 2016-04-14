@@ -4,7 +4,7 @@
 
 Enemy::Enemy(const Vec2& pos, const Texture* tex)
 	: Entity(pos, tex)
-	, mSpeed(1) {
+	, mSpeed(50) {
 	SetHitRadius(10);
 }
 
@@ -96,8 +96,8 @@ bool Enemy::Update(float dt) {
 	}
 
 	// Apply movement
-	Center.x += dir.x * mSpeed;
-	Center.y += dir.y * mSpeed;
+	Center.x += dir.x * mSpeed * dt;
+	Center.y += dir.y * mSpeed * dt;
 
 	return true;
 }
