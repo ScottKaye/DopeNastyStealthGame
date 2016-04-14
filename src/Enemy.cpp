@@ -77,6 +77,11 @@ bool Enemy::Update(float dt) {
 		mDone = true;
 	}
 
+	// If there is no target, do not move
+	if (mTarget.x == 0 && mTarget.y == 0) {
+		mTarget = Center;
+	}
+
 	// Get vector for which direction to move towards
 	Vec2 dir = Vec2(mTarget.x - Center.x, mTarget.y - Center.y);
 
