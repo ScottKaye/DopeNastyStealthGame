@@ -121,8 +121,8 @@ void Level::LoadPaths(const std::string& filename) {
 		std::smatch matches;
 
 		if (std::regex_search(line, matches, rgx)) {
-			float x = atof(matches[0].str().c_str());
-			float y = atof(matches[2].str().c_str());
+			float x = atof(matches[0].str().c_str()) * 50 + 25;
+			float y = atof(matches[2].str().c_str()) * 50 + 25;
 
 			Enemy * e = new Enemy(Vec2(x, y), Game::EnemyTex);
 
