@@ -82,6 +82,12 @@ void Level::LoadWalls(const std::string& filename) {
 			case 'r':
 				Walls.push_back(new Wall({ col, row, 90, 50 }, WallPlane::WP_Right));
 				break;
+			case 'P':
+				Game::MainPlayer->Center = Vec2(
+					col + Game::MainPlayer->Width() / 2,
+					row + Game::MainPlayer->Height() / 2
+				);
+				break;
 			}
 
 			col += 50;
@@ -120,8 +126,8 @@ void Level::LoadPaths(const std::string& filename) {
 		std::smatch matches;
 
 		if (std::regex_search(line, matches, rgx)) {
-			float x = atof(matches[0].str().c_str()) * 50 + 25;
-			float y = atof(matches[2].str().c_str()) * 50 + 25;
+			float x = atof(matches[0].str().c_str()) * 50 + Game::EnemyTex->GetWidth() / 2;
+			float y = atof(matches[2].str().c_str()) * 50 + Game::EnemyTex->GetWidth() / 2;
 
 			Enemy * e = new Enemy(Vec2(x, y), Game::EnemyTex);
 
