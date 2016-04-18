@@ -35,6 +35,7 @@
       <Filter>Game Elements</Filter>
     </ClCompile>
     <ClCompile Include="src\Enemy.cpp" />
+    <ClCompile Include="Portal.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Entity.h">
@@ -101,6 +102,7 @@
     <ClInclude Include="include\EnemyAction.h">
       <Filter>Game Elements</Filter>
     </ClInclude>
+    <ClInclude Include="Portal.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />

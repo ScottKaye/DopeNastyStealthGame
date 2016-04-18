@@ -88,6 +88,11 @@ void Level::LoadWalls(const std::string& filename) {
 					row + Game::MainPlayer->Height() / 2
 				);
 				break;
+			case 'X':
+				//Game::endPortal->Center = Vec2(
+				//	col + Game::endPortal->Width() / 2,
+				//	row + Game::endPortal->Height() / 2);
+				break;
 			}
 
 			col += 50;
@@ -216,6 +221,10 @@ void Level::Draw(SDL_Renderer* renderer) {
 	// Enemies
 	for (Enemy* e : Enemies) {
 		e->Draw(renderer);
+	}
+
+	for (Portal* p : Portals) {
+		p->Draw(renderer);
 	}
 }
 

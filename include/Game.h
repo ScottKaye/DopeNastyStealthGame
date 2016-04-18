@@ -52,8 +52,10 @@ public:
 
 	static Texture*			PlayerTex;
 	static Texture*			EnemyTex;
+	static Texture*			PortalTex;
 
 	static Player*				    MainPlayer;
 	static std::vector<Entity*>		Entities;
 	static Level*					CurrentLevel;
+	static Portal*					endPortal;
 };

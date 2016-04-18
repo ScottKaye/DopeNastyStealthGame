@@ -6,6 +6,7 @@
 #include "Player.h"
 #include "Wall.h"
 #include "Enemy.h"
+#include "Portal.h"
 
 class Level {
 	void LoadWalls(const std::string& filename);
@@ -18,6 +19,7 @@ public:
 
 	std::vector<Wall*> Walls;
 	std::vector<Enemy*> Enemies;
+	std::vector<Portal*> Portals;
 
 	void Draw(SDL_Renderer* renderer);
 	void Update(float dt, Player* player);

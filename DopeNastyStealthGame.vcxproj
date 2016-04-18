@@ -90,6 +90,7 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Portal.cpp" />
     <ClCompile Include="src\Enemy.cpp" />
     <ClCompile Include="src\Level.cpp" />
     <ClCompile Include="src\Animation.cpp" />
@@ -124,6 +125,7 @@
     <ClInclude Include="include\Level.h" />
     <ClInclude Include="include\Powerup.h" />
     <ClInclude Include="include\Wall.h" />
+    <ClInclude Include="include\Portal.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />

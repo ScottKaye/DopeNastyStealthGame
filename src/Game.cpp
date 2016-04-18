@@ -11,6 +11,8 @@ Texture*				Game::EnemyTex;
 std::vector<Entity*>	Game::Entities;
 Player*					Game::MainPlayer;
 Level*					Game::CurrentLevel;
+Texture*				Game::PortalTex;
+Portal*					Game::endPortal;
 
 // Private globals
 bool showHitboxes = true;
@@ -31,6 +33,7 @@ bool Game::Initialize() {
 	// Load all textures
 	PlayerTex = Texture::Load("media/player.png", renderer);
 	EnemyTex = Texture::Load("media/enemy.png", renderer);
+	PortalTex = Texture::Load("media/portal.png", renderer);
 
 	// Create spatial hash map
 	mSpatial = new Spatial(System::GetWindowWidth(), System::GetWindowHeight(), 50);
@@ -50,6 +53,14 @@ bool Game::Initialize() {
 		Entities.push_back(e);
 	}
 
+	//Place portal
+	Vec2 portalPos;
+	portalPos.x = System::GetWindowWidth() - 24;
+	portalPos.y = 26;
+	endPortal = new Portal(portalPos, PortalTex);
+	Entities.push_back(endPortal);
+
+
 	return true;
 }
 
@@ -65,11 +76,14 @@ void Game::Shutdown() {
 	// Delete spatial hash map
 	delete mSpatial;
 
+	delete endPortal;
+
 	// Release audio
 
 	// Destroy all textures
 	Texture::Destroy(PlayerTex);
 	Texture::Destroy(EnemyTex);
+	Texture::Destroy(PortalTex);
 }
 
 void Game::Draw(SDL_Renderer* renderer) {
