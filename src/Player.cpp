@@ -42,7 +42,7 @@ bool Player::Update(float dt) {
 
 	unsigned radius = HitRadius();
 
-	SDL_Rect hitbox = { Center.x - radius, Center.y - radius, radius * 2, radius * 2 };
+	SDL_Rect hitbox = { (int)Center.x - (int)radius, (int)Center.y - (int)radius, (int)radius * 2, (int)radius * 2 };
 
 	// Check collisions against all walls
 	for (Wall* w : Game::CurrentLevel->Walls) {
