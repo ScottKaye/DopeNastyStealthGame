@@ -17,9 +17,8 @@ Button::Button(Texture* tex, int x, int y)
 	mRect.h = tex->GetHeight();
 }
 
-Button::~Button()
-{
-	//std::cout << "Button destroyed" << std::endl;
+Button::~Button() {
+	
 }
 
 SDL_Point Button::Center() const

@@ -8,7 +8,6 @@
 
 #include "Random.h"
 #include "Team.h"
-#include "Spatial.h"
 #include "Level.h"
 #include "MainMenu.h"
 
@@ -17,14 +16,6 @@
 
 class Gameplay : public GameState
 {
-	Spatial*				mSpatial;
-	Texture*                mShuttleTex;
-	Texture*                mShotTex;
-
-	Player*				    mPlayer;
-
-	
-
 	bool                    mIsActive;
 
 public:
@@ -34,10 +25,8 @@ public:
 	bool                    IsActive() const { return mIsActive; }
 
 	bool                    Initialize() override;
-	void                    Shutdown() override;
 
 	void                    LoadLevel();
-	void                    ClearLevel();
 
 	void                    Update(float dt) override;
 	void                    Draw(SDL_Renderer* renderer) override;
@@ -49,18 +38,13 @@ public:
 	float                   WorldTop() const { return 0.0f; }
 	float                   WorldBottom() const { return (float)System::GetWindowHeight(); }
 
-	// Public globals
-	static void				DestroyEntityById(int id);
-	static void				DestroyPlayer();
-
 	static Texture*			PlayerTex;
 	static Texture*			EnemyTex;
 	static Texture*			PortalTex;
+	static Level*			CurrentLevel;
 
-	static Player*				    MainPlayer;
-	static std::vector<Entity*>		Entities;
-	static Level*					CurrentLevel;
-	static Portal*					endPortal;
+	static bool DrawHitboxes;
+
 };
 
 #endif

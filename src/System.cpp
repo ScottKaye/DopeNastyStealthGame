@@ -152,9 +152,9 @@ int main(int argc, char** argv) {
 	SDL_SetRenderDrawBlendMode(g_Renderer, SDL_BLENDMODE_BLEND);
 
 	// Create game
-	Game game;
+	Game* game = new Game();
 
-	if (!game.Initialize()) {
+	if (!game->Initialize()) {
 		std::cerr << "*** Game initialization failed" << std::endl;
 		return EXIT_FAILURE;
 	}
@@ -170,7 +170,7 @@ int main(int argc, char** argv) {
 		++g_FrameNo;
 
 		// Draw current frame
-		game.Draw(g_Renderer);
+		game->Draw(g_Renderer);
 		SDL_RenderPresent(g_Renderer);
 
 		// Forward events to game handlers
@@ -181,19 +181,19 @@ int main(int argc, char** argv) {
 				g_ShouldQuit = true;
 				break;
 			case SDL_KEYDOWN:
-				game.OnKeyDown(e.key);
+				game->OnKeyDown(e.key);
 				break;
 			case SDL_KEYUP:
-				game.OnKeyUp(e.key);
+				game->OnKeyUp(e.key);
 				break;
 			case SDL_MOUSEBUTTONDOWN:
-				game.OnMouseDown(e.button);
+				game->OnMouseDown(e.button);
 				break;
 			case SDL_MOUSEBUTTONUP:
-				game.OnMouseUp(e.button);
+				game->OnMouseUp(e.button);
 				break;
 			case SDL_MOUSEMOTION:
-				game.OnMouseMotion(e.motion);
+				game->OnMouseMotion(e.motion);
 				break;
 			default:
 				break;
@@ -209,12 +209,12 @@ int main(int argc, char** argv) {
 
 		// Update game if it's not paused
 		if (!g_IsPaused) {
-			game.Update(g_TimeSinceLastFrame);
+			game->Update(g_TimeSinceLastFrame);
 		}
 	}
 
 	// Cleanup
-	game.Shutdown();
+	delete game;
 	IMG_Quit();
 	Mix_Quit();
 	SDL_Quit();

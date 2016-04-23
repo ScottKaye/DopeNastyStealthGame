@@ -57,8 +57,3 @@ bool Entity::CollidesWith(Entity* ent) const {
 	// This is to quiet the compiler about forcibly converting from SDL_bool to bool
 	return SDL_HasIntersection(&r1, &r2) ? true : false;
 }
-
-// Remove the entity from the game
-void Entity::Destroy() {
-	Gameplay::DestroyEntityById(GetId());
-}

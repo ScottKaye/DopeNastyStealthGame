@@ -19,7 +19,6 @@ public:
 	virtual             ~GameState() {}
 
 	virtual bool        Initialize() = 0;
-	virtual void        Shutdown() = 0;
 
 	virtual void        Update(float dt) = 0;
 	virtual void        Draw(SDL_Renderer* renderer) = 0;

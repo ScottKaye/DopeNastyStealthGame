@@ -15,12 +15,12 @@ class Entity {
 
 public:
 	Entity(const Vec2& pos, const Texture* tex);
+	virtual ~Entity() {}
 
 	unsigned				GetId() const { return mId; }
 
 	Vec2					Center;
 	Vec2					Velocity;
-	bool					Garbage = false;
 
 	unsigned				HitRadius() const { return mHitRadius; }
 	float                   Left() const { return Center.x - 0.5f * Width(); }
@@ -40,7 +40,6 @@ public:
 
 	// Implementation-specific methods
 	virtual bool			Update(float dt);
-	virtual void			Destroy();
 	virtual void			Draw(SDL_Renderer* renderer) const;
 	virtual bool			CollidesWith(Entity* ent) const;
 };

@@ -19,7 +19,7 @@ class Enemy : public Entity {
 
 public:
 	Enemy(const Vec2& pos, const Texture* tex);
-	~Enemy();
+	~Enemy() override;
 
 	bool		Update(float dt) override;
 	void		SetDirection(EnemyDirection dir) { mDir = dir; }

@@ -15,5 +15,4 @@ public:
 	void                    SetSpeed(float speed) { mSpeed = speed; }
 
 	bool					Update(float dt) override;
-	void					Destroy() override;
 };

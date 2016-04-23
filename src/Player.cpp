@@ -85,7 +85,3 @@ bool Player::Update(float dt) {
 
 	return false;
 }
-
-void Player::Destroy() {
-	Gameplay::DestroyPlayer();
-}

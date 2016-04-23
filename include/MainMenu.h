@@ -22,7 +22,6 @@ public:
 	~MainMenu() override;
 
 	bool                Initialize() override;
-	void                Shutdown() override;
 
 	void                Update(float dt) override;
 	void                Draw(SDL_Renderer* renderer) override;

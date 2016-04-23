@@ -13,6 +13,8 @@ Enemy::~Enemy() {
 }
 
 bool Enemy::Update(float dt) {
+	if (mPath.size() == 0) return true;
+
 	// Current path action
 	EnemyAction action = mPath[mPathIndex];
 

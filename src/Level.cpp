@@ -6,6 +6,40 @@
 #include "System.h"
 #include "Gameplay.h"
 
+Level::Level(const std::string& filename) {
+	// Create spatial hash map
+	mSpatial = new Spatial(System::GetWindowWidth(), System::GetWindowHeight(), 50);
+
+	Entities.clear();
+	Walls.clear();
+
+	LoadWalls(filename);
+	LoadPaths(filename);
+
+	if (MainPlayer == NULL) {
+		throw "## ERR: No player cell for level " + filename;
+	}
+
+	if (EndPortal == NULL) {
+		throw "## ERR: No end portal cell for level " + filename;
+	}
+}
+
+Level::~Level() {
+	delete mSpatial;
+
+	for (Wall* w : Walls) {
+		delete w;
+	}
+
+	for (auto e : Entities) {
+		delete e;
+	}
+
+	delete MainPlayer;
+	delete EndPortal;
+}
+
 void Level::LoadWalls(const std::string& filename) {
 	std::string fWalls = filename + "-walls.txt";
 	std::fstream f(fWalls);
@@ -83,16 +117,33 @@ void Level::LoadWalls(const std::string& filename) {
 				Walls.push_back(new Wall({ col, row, 90, 50 }, WallPlane::WP_Right));
 				break;
 			case 'P':
-				Gameplay::MainPlayer->Center = Vec2(
-					col + Gameplay::MainPlayer->Width() / 2,
-					row + Gameplay::MainPlayer->Height() / 2
-				);
-				break;
+			{
+				Vec2 location = Vec2(
+					(float)(col + Gameplay::PlayerTex->GetWidth() / 2),
+					(float)(row + Gameplay::PlayerTex->GetHeight() / 2)
+					);
+
+				if (MainPlayer != NULL) {
+					delete MainPlayer;
+					MainPlayer = NULL;
+				}
+
+				MainPlayer = new Player(location, Gameplay::PlayerTex);
+			}
+			break;
 			case 'X':
-				Gameplay::endPortal->Center = Vec2(
-					col + Gameplay::endPortal->Width() / 2,
-					row + Gameplay::endPortal->Height() / 2);
-				break;
+			{
+				if (EndPortal != NULL) {
+					delete EndPortal;
+					EndPortal = NULL;
+				}
+
+				EndPortal = new Portal(Vec2(
+					(float)(col + Gameplay::PortalTex->GetWidth() / 2),
+					(float)(row + Gameplay::PortalTex->GetHeight() / 2)
+				), Gameplay::PortalTex);
+			}
+			break;
 			}
 
 			col += 50;
@@ -131,10 +182,10 @@ void Level::LoadPaths(const std::string& filename) {
 		std::smatch matches;
 
 		if (std::regex_search(line, matches, rgx)) {
-			float x = atof(matches[0].str().c_str()) * 50 + Gameplay::EnemyTex->GetWidth() / 2;
-			float y = atof(matches[2].str().c_str()) * 50 + Gameplay::EnemyTex->GetWidth() / 2;
+			float x = (float)(atof(matches[0].str().c_str()) * 50 + Gameplay::EnemyTex->GetWidth() / 2);
+			float y = (float)(atof(matches[2].str().c_str()) * 50 + Gameplay::EnemyTex->GetWidth() / 2);
 
-			Enemy * e = new Enemy(Vec2(x, y), Gameplay::EnemyTex);
+			Enemy* e = new Enemy(Vec2(x, y), Gameplay::EnemyTex);
 
 			EnemyDirection initialDir;
 
@@ -172,7 +223,7 @@ void Level::LoadPaths(const std::string& filename) {
 			}
 
 			e->SetPath(actions);
-			Enemies.push_back(e);
+			Entities.push_back(e);
 		}
 		else {
 			std::cout << "Invalid path specified." << std::endl;
@@ -180,18 +231,37 @@ void Level::LoadPaths(const std::string& filename) {
 	}
 }
 
-Level::Level(const std::string& filename) {
-	LoadWalls(filename);
-	LoadPaths(filename);
+void Light(SDL_Renderer* renderer, Entity* ent, int r, int g, int b, int a) {
+	int size = 50;
+	int row = (int)std::floor(ent->Center.y / size);
+	int col = (int)std::floor(ent->Center.x / size);
+
+	// Light up surrounding squares a little bit as well
+	for (int y = row - 1; y <= row + 1; ++y) {
+		for (int x = col - 1; x <= col + 1; ++x) {
+			SDL_Rect rect = { x * size, y * size, size, size };
+			SDL_SetRenderDrawColor(renderer, r, g, b,
+				x == col && y == row
+				? a : (int)(a / 2));
+			SDL_RenderFillRect(renderer, &rect);
+		}
+	}
 }
 
-Level::~Level() {
-	for (Wall* w : Walls) {
-		delete w;
-	}
+void Hitbox(SDL_Renderer* renderer, Entity* ent) {
+	// Raw box
+	SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
+	SDL_Rect rect = { (int)ent->Left(), (int)ent->Top(), (int)ent->Height(), (int)ent->Width() };
+	SDL_RenderDrawRect(renderer, &rect);
 
-	for (Enemy* e : Enemies) {
-		delete e;
+	// Hit radius
+	SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);
+	int density = 25;
+	for (int p = 0; p < density; p++) {
+		float x = ent->Center.x + ent->HitRadius() * std::cos(2 * (float)M_PI * p / density);
+		float y = ent->Center.y + ent->HitRadius() * std::sin(2 * (float)M_PI * p / density);
+
+		SDL_RenderDrawPoint(renderer, (int)x, (int)y);
 	}
 }
 
@@ -213,23 +283,51 @@ void Level::Draw(SDL_Renderer* renderer) {
 	SDL_RenderFillRect(renderer, &bBottom);
 	SDL_RenderFillRect(renderer, &bLeft);
 
+	// Grid
+	int size = mSpatial->Cellsize();
+	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 25);
+	for (int col = 0; col < mSpatial->Cols(); ++col) {
+		for (int row = 0; row < mSpatial->Rows(); ++row) {
+			SDL_Rect rect = { col * size, row * size, size, size };
+			SDL_RenderDrawRect(renderer, &rect);
+		}
+	}
+
+	// Light up squares with entities
+	// Squares with more entities will be brighter
+	// Also draw hitboxes
+	for (auto e : Entities) {
+		Light(renderer, e, 255, 255, 255, 25);
+
+		if (Gameplay::DrawHitboxes) Hitbox(renderer, e);
+	}
+
+	Light(renderer, MainPlayer, 0, 246, 255, 35);
+	if (Gameplay::DrawHitboxes) Hitbox(renderer, MainPlayer);
+
 	// Level walls
 	for (Wall* w : Walls) {
 		w->Draw(renderer);
 	}
 
-	// Enemies
-	for (Enemy* e : Enemies) {
+	// Entities
+	for (auto e : Entities) {
 		e->Draw(renderer);
 	}
 
-	for (Portal* p : Portals) {
-		p->Draw(renderer);
-	}
+	MainPlayer->Draw(renderer);
+
+	// Portals
+	EndPortal->Draw(renderer);
 }
 
-void Level::Update(float dt, Player* player) {
-	for (Enemy* e : Enemies) {
+void Level::Update(float dt) {
+	// Reset spatial hashmap
+	mSpatial->ClearCells();
+
+	for (auto e : Entities) {
 		e->Update(dt);
 	}
+
+	MainPlayer->Update(dt);
 }

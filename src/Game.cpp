@@ -5,12 +5,6 @@
 #include "Game.h"
 #include "Text.h"
 
-// Resolve externs
-
-
-// Private globals
-
-
 Game::Game()
 	: mGameplayState(NULL)
 	, mMainMenuState(NULL)
@@ -27,11 +21,7 @@ bool Game::Initialize() {
 	// Get renderer
 	SDL_Renderer* renderer = System::GetRenderer();
 
-	// Load all textures
-
-	//
-	// create all game states
-	//
+	// Create all game states
 	mGameplayState = new Gameplay(this);
 	if (!mGameplayState->Initialize()) {
 		return false;
@@ -42,77 +32,51 @@ bool Game::Initialize() {
 		return false;
 	}
 
-	// set initial state
+	// Set initial state
 	mCurrentState = mMainMenuState;
-
-	// Create spatial hash map
-	mSpatial = new Spatial(System::GetWindowWidth(), System::GetWindowHeight(), 50);
-
-
 
 	return true;
 }
 
-void Game::Shutdown() {
+Game::~Game() {
 	std::cout << "Shutting down game (from actually within game.cpp)" << std::endl;
 
-	mGameplayState->Shutdown();
-	mMainMenuState->Shutdown();
-
-	delete mGameplayState;
 	delete mMainMenuState;
+	delete mGameplayState;
 }
 
 void Game::Draw(SDL_Renderer* renderer) {
-	// Clear the screen
 	mCurrentState->Draw(renderer);
-
-	//
-	// Background
-	// Effects, debug stuff
-	//
-
-	// Drawing the actual spatial boundaries makes a cool grid effect, I think I'll keep it
-	
 }
 
-
-void Game::Update(float dt)
-{
+void Game::Update(float dt) {
 	mCurrentState->Update(dt);
 }
 
-void Game::OnKeyDown(const SDL_KeyboardEvent& kbe)
-{
+void Game::OnKeyDown(const SDL_KeyboardEvent& kbe) {
 	mCurrentState->OnKeyDown(kbe);
 }
 
-void Game::OnKeyUp(const SDL_KeyboardEvent& kbe)
-{
+void Game::OnKeyUp(const SDL_KeyboardEvent& kbe) {
 	mCurrentState->OnKeyUp(kbe);
 }
 
-void Game::OnMouseDown(const SDL_MouseButtonEvent& mbe)
-{
+void Game::OnMouseDown(const SDL_MouseButtonEvent& mbe) {
 	mCurrentState->OnMouseDown(mbe);
 }
 
-void Game::OnMouseUp(const SDL_MouseButtonEvent& mbe)
-{
+void Game::OnMouseUp(const SDL_MouseButtonEvent& mbe) {
 	mCurrentState->OnMouseUp(mbe);
 }
 
-void Game::OnMouseMotion(const SDL_MouseMotionEvent& mme)
-{
+void Game::OnMouseMotion(const SDL_MouseMotionEvent& mme) {
 	mCurrentState->OnMouseMotion(mme);
 }
 
-void Game::EnterMainMenu()
-{
+void Game::EnterMainMenu() {
 	mCurrentState = mMainMenuState;
 }
 
-void Game::EnterGameplay()
-{
+void Game::EnterGameplay() {
 	mCurrentState = mGameplayState;
 }
