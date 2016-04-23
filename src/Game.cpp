@@ -46,12 +46,9 @@ bool Game::Initialize() {
 
 	Entities.push_back(MainPlayer);
 
-	// Start level
-	CurrentLevel = new Level("levels/1");
 
-	for (Enemy* e : CurrentLevel->Enemies) {
-		Entities.push_back(e);
-	}
+
+
 
 	//Place portal
 	Vec2 portalPos;
@@ -60,6 +57,13 @@ bool Game::Initialize() {
 	endPortal = new Portal(portalPos, PortalTex);
 	Entities.push_back(endPortal);
 
+	// Start level
+	CurrentLevel = new Level("levels/2");
+
+	//add the enemies
+	for (Enemy* e : CurrentLevel->Enemies) {
+		Entities.push_back(e);
+	}
 
 	return true;
 }

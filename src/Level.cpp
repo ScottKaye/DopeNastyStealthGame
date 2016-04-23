@@ -89,9 +89,9 @@ void Level::LoadWalls(const std::string& filename) {
 				);
 				break;
 			case 'X':
-				//Game::endPortal->Center = Vec2(
-				//	col + Game::endPortal->Width() / 2,
-				//	row + Game::endPortal->Height() / 2);
+				Game::endPortal->Center = Vec2(
+					col + Game::endPortal->Width() / 2,
+					row + Game::endPortal->Height() / 2);
 				break;
 			}
 
