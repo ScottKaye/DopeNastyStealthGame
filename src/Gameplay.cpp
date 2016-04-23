@@ -1,8 +1,18 @@
 #include "Gameplay.h"
 #include "Texture.h"
 #include "Game.h"
+#include "Constants.h"
 
 #include <iostream>
+
+//resolve externs
+Texture*				Gameplay::PlayerTex;
+Texture*				Gameplay::EnemyTex;
+std::vector<Entity*>	Gameplay::Entities;
+Player*					Gameplay::MainPlayer;
+Level*					Gameplay::CurrentLevel;
+Texture*				Gameplay::PortalTex;
+Portal*					Gameplay::endPortal;
 
 Gameplay::Gameplay(Game* game)
 	: GameState(game)
@@ -15,6 +25,9 @@ Gameplay::~Gameplay()
 {
 }
 
+//private shit
+bool showHitboxes = true;
+
 bool Gameplay::Initialize()
 {
 	// get renderer
@@ -23,7 +36,11 @@ bool Gameplay::Initialize()
 	//
 	// load all textures
 	//
+	PlayerTex = Texture::Load("media/player.png", renderer);
+	EnemyTex = Texture::Load("media/enemy.png", renderer);
+	PortalTex = Texture::Load("media/portal.png", renderer);
 
+	
 	LoadLevel();
 
 	return true;
@@ -33,26 +50,37 @@ void Gameplay::Shutdown()
 {
 	ClearLevel();
 
-	// destroy all textures
-	Texture::Destroy(mShuttleTex);
-	Texture::Destroy(mShotTex);
+
 }
 
 void Gameplay::LoadLevel()
 {
-	ClearLevel();
+	//ClearLevel();
 
 	//
-	// spawn player
-	//
-
+	// Spawn player
 	Vec2 spawnPos;
 	spawnPos.x = 0.5f * System::GetWindowWidth();
-	spawnPos.y = 0.75f * System::GetWindowHeight();
+	spawnPos.y = 0.5f * System::GetWindowHeight();
+	MainPlayer = new Player(spawnPos, PlayerTex);
 
-	mPlayer = new Player(spawnPos, mShuttleTex);
+	Entities.push_back(MainPlayer);
 
-	mPlayer->SetSpeed(150.0f);
+	//Place portal
+	Vec2 portalPos;
+	portalPos.x = System::GetWindowWidth() - 24;
+	portalPos.y = 26;
+	endPortal = new Portal(portalPos, PortalTex);
+	Entities.push_back(endPortal);
+
+	// Start level
+	CurrentLevel = new Level("levels/2");
+
+	//add the enemies
+	for (Enemy* e : CurrentLevel->Enemies) {
+		Entities.push_back(e);
+	}
+
 }
 
 void Gameplay::ClearLevel()
@@ -60,42 +88,67 @@ void Gameplay::ClearLevel()
 	delete mPlayer;
 	mPlayer = NULL;
 
-//	for (auto it = mMissiles.begin(); it != mMissiles.end(); it++) {
-//		Missile* m = *it;
-//		delete m;
-//	}
-//	mMissiles.clear();
+	std::cout << "## Shutting down game." << std::endl;
+
+	// Delete player
+	delete MainPlayer;
+
+	// Delete level
+	delete CurrentLevel;
+
+	// Delete spatial hash map
+	delete mSpatial;
+
+	delete endPortal;
+
+	// Release audio
+
+	// Destroy all textures
+	Texture::Destroy(PlayerTex);
+	Texture::Destroy(EnemyTex);
+	Texture::Destroy(PortalTex);
 }
 
 void Gameplay::Update(float dt)
 {
-	// get world bounds
-	float worldLeft = WorldLeft();
-	float worldRight = WorldRight();
-	float worldTop = WorldTop();
-	float worldBottom = WorldBottom();
+	// Update level
+	CurrentLevel->Update(dt, MainPlayer);
 
-	// update player
-	mPlayer->Update(dt);
+	// Reset spatial hashmap
+	mSpatial->ClearCells();
+	mSpatial->Register(MainPlayer);
 
-	// keep the player within world bounds
-	if (mPlayer->Left() < worldLeft) {
-		mPlayer->SetLeft(worldLeft);
+	// Process entities
+	for (unsigned i = 0; i < Entities.size(); ++i) {
+		Entity* e = Entities[i];
+
+		// "Garbage collector", clean up and move on
+		if (e->Garbage) {
+			delete Entities[i];
+			Entities[i] = Entities.back();
+			Entities.pop_back();
+
+			continue;
+		}
+
+		// If entity has been killed by update, move on
+		if (e->Update(dt)) continue;
+
+		mSpatial->Register(e);
+
+		// Collisions
+		std::vector<Entity*> nearby = mSpatial->GetNearby(e);
+		for (unsigned j = 0; j < nearby.size(); ++j) {
+			Entity* e2 = nearby[j];
+
+			// Are we colliding with anything?
+			if (e->CollidesWith(e2)) {
+				// TODO player loses
+
+				break;
+			}
+		}
 	}
-	else if (mPlayer->Right() > worldRight) {
-		mPlayer->SetRight(worldRight);
-	}
-	if (mPlayer->Top() < worldTop) {
-		mPlayer->SetTop(worldTop);
-	}
-	else if (mPlayer->Bottom() > worldBottom) {
-		mPlayer->SetBottom(worldBottom);
-	}
-
-	// update missiles
-
-
-	mIsActive = true;
 }
 
 void Gameplay::Draw(SDL_Renderer* renderer)
@@ -104,25 +157,108 @@ void Gameplay::Draw(SDL_Renderer* renderer)
 	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 	SDL_RenderClear(renderer);
 
-	// draw missiles
+	int size = mSpatial->Cellsize();
+	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 25);
+	for (int col = 0; col < mSpatial->Cols(); ++col) {
+		for (int row = 0; row < mSpatial->Rows(); ++row) {
+			SDL_Rect rect = { col * size, row * size, size, size };
+			SDL_RenderDrawRect(renderer, &rect);
+		}
+	}
 
-	// draw player
-	mPlayer->Draw(renderer);
+	// Light up squares with entities
+	// Squares with more entities will be brighter
+	for (Entity* ent : Entities) {
+		int r = 255;
+		int g = 255;
+		int b = 255;
+		int op = 25;
+
+		if (dynamic_cast<Player*>(ent) != NULL) {
+			r = 0;
+			g = 246;
+			b = 255;
+			op = 35;
+		}
+
+		int row = (int)std::floor(ent->Center.y / size);
+		int col = (int)std::floor(ent->Center.x / size);
+
+		// Light up surrounding squares a little bit as well
+		for (int y = row - 1; y <= row + 1; ++y) {
+			for (int x = col - 1; x <= col + 1; ++x) {
+				SDL_Rect rect = { x * size, y * size, size, size };
+				SDL_SetRenderDrawColor(renderer, r, g, b,
+					x == col && y == row
+					? op
+					: (int)(op / 2));
+				SDL_RenderFillRect(renderer, &rect);
+			}
+		}
+	}
+
+	//
+	// Entities
+	//
+
+	// Draw entities
+	for (unsigned i = 0; i < Entities.size(); ++i) {
+		Entities[i]->Draw(renderer);
+	}
+
+	// Draw level
+	CurrentLevel->Draw(renderer);
+
+	//
+	// Top level
+	// UI
+	//
+
+	// Hitboxes
+	if (showHitboxes) {
+
+		// Raw boxes
+		SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
+		for (unsigned i = 0; i < Entities.size(); ++i) {
+			SDL_Rect rect = { (int)Entities[i]->Left(), (int)Entities[i]->Top(), (int)Entities[i]->Height(), (int)Entities[i]->Width() };
+			SDL_RenderDrawRect(renderer, &rect);
+		}
+
+		// Hit radiuses
+		SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);
+		int density = 25;
+		for (Entity* ent : Entities) {
+			for (int p = 0; p < density; p++) {
+				float x = ent->Center.x + ent->HitRadius() * std::cos(2 * (float)M_PI * p / density);
+				float y = ent->Center.y + ent->HitRadius() * std::sin(2 * (float)M_PI * p / density);
+
+				SDL_RenderDrawPoint(renderer, (int)x, (int)y);
+			}
+		}
+	}
+
+
 }
-
-void Gameplay::OnKeyDown(const SDL_KeyboardEvent& kbe)
-{
+void Gameplay::OnKeyDown(const SDL_KeyboardEvent& kbe) {
 	switch (kbe.keysym.sym) {
 	case SDLK_ESCAPE:
-		std::cout << "User pressed Escape" << std::endl;
-		mGame->EnterMainMenu();
+		System::Quit();
 		break;
-
-	case SDLK_SPACE:
-		// fire a missile
-	{
-		
+	case SDLK_b:
+		showHitboxes = !showHitboxes;
+		break;
 	}
-	break;
+}
+
+void Gameplay::DestroyPlayer() {
+	// TODO
+}
+
+void Gameplay::DestroyEntityById(int id) {
+	for (unsigned i = 0; i < Entities.size(); ++i) {
+		if (Entities[i]->GetId() == id) {
+			Entities[i]->Garbage = true;
+			break;
+		}
 	}
 }

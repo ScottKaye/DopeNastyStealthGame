@@ -60,5 +60,5 @@ bool Entity::CollidesWith(Entity* ent) const {
 
 // Remove the entity from the game
 void Entity::Destroy() {
-	Game::DestroyEntityById(GetId());
+	Gameplay::DestroyEntityById(GetId());
 }

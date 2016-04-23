@@ -14,6 +14,8 @@
 #include "Gameplay.h"
 #include "MainMenu.h"
 
+class GameState;
+
 class Game {
 	Spatial*				mSpatial;
 	Gameplay*               mGameplayState;
@@ -22,6 +24,7 @@ class Game {
 
 public:
 	Game();
+	//~Game(); dont we need this?
 
 	bool				    Initialize();
 	void				    Shutdown();
@@ -35,10 +38,6 @@ public:
 	void				    OnMouseUp(const SDL_MouseButtonEvent& mbe);
 	void				    OnMouseMotion(const SDL_MouseMotionEvent& mme);
 
-	float                   WorldLeft() const { return 0.0f; }
-	float                   WorldRight() const { return (float)System::GetWindowWidth(); }
-	float                   WorldTop() const { return 0.0f; }
-	float                   WorldBottom() const { return (float)System::GetWindowHeight(); }
 
 	Gameplay*               GetGameplayState() const { return mGameplayState; }
 	MainMenu*               GetMainMenuState() const { return mMainMenuState; }
@@ -46,16 +45,4 @@ public:
 	void                    EnterMainMenu();
 	void                    EnterGameplay();
 
-	// Public globals
-	static void				DestroyEntityById(int id);
-	static void				DestroyPlayer();
-
-	static Texture*			PlayerTex;
-	static Texture*			EnemyTex;
-	static Texture*			PortalTex;
-
-	static Player*				    MainPlayer;
-	static std::vector<Entity*>		Entities;
-	static Level*					CurrentLevel;
-	static Portal*					endPortal;
 };

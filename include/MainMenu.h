@@ -10,10 +10,12 @@ class MainMenu : public GameState
 	Texture*            mBtnNewTex;
 	Texture*            mBtnResumeTex;
 	Texture*            mBtnExitTex;
+	Texture*			mBtnMainScreenTex;
 
 	Button*             mBtnNew;
 	Button*             mBtnResume;
 	Button*             mBtnExit;
+	Button*				mBtnMainScreen;
 
 public:
 	MainMenu(Game* game);

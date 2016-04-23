@@ -45,7 +45,7 @@ bool Player::Update(float dt) {
 	SDL_Rect hitbox = { (int)Center.x - (int)radius, (int)Center.y - (int)radius, (int)radius * 2, (int)radius * 2 };
 
 	// Check collisions against all walls
-	for (Wall* w : Game::CurrentLevel->Walls) {
+	for (Wall* w : Gameplay::CurrentLevel->Walls) {
 		SDL_Rect overlap;
 		WallPlane p = w->Plane();
 
@@ -87,5 +87,5 @@ bool Player::Update(float dt) {
 }
 
 void Player::Destroy() {
-	Game::DestroyPlayer();
+	Gameplay::DestroyPlayer();
 }

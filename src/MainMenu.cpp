@@ -13,6 +13,7 @@ MainMenu::MainMenu(Game* game)
 	, mBtnNew(NULL)
 	, mBtnResume(NULL)
 	, mBtnExit(NULL)
+	, mBtnMainScreen(NULL)
 {
 }
 
@@ -28,16 +29,19 @@ bool MainMenu::Initialize()
 	mBtnResumeTex = Texture::Load("media/button_resume.png", renderer);
 	mBtnExitTex = Texture::Load("media/button_exit.png", renderer);
 
+	mBtnMainScreenTex = Texture::Load("media/splash.png", renderer);
+
 	mBtnNew = new Button(mBtnNewTex);
 	mBtnResume = new Button(mBtnResumeTex);
 	mBtnExit = new Button(mBtnExitTex);
+	mBtnMainScreen = new Button(mBtnMainScreenTex);
+
 
 	int cx = System::GetWindowWidth() / 2;
 	int cy = System::GetWindowHeight() / 2;
 
-	mBtnResume->SetCenter(cx, cy - 100);
-	mBtnNew->SetCenter(cx, cy);
-	mBtnExit->SetCenter(cx, cy + 100);
+
+	mBtnMainScreen->SetCenter(cx, cy);
 
 	return true;
 }
@@ -47,10 +51,12 @@ void MainMenu::Shutdown()
 	delete mBtnNew;
 	delete mBtnResume;
 	delete mBtnExit;
+	delete mBtnMainScreen;
 
 	Texture::Destroy(mBtnNewTex);
 	Texture::Destroy(mBtnResumeTex);
 	Texture::Destroy(mBtnExitTex);
+	Texture::Destroy(mBtnMainScreenTex);
 }
 
 void MainMenu::Update(float dt)
@@ -73,10 +79,11 @@ void MainMenu::Draw(SDL_Renderer* renderer)
 	else {
 		SDL_SetRenderDrawColor(renderer, 255, 0, 255, 255);
 		SDL_RenderClear(renderer);
+		
 	}
 
-	mBtnNew->Draw(renderer);
-	mBtnExit->Draw(renderer);
+	mBtnMainScreen->Draw(renderer);
+	
 }
 
 void MainMenu::OnKeyDown(const SDL_KeyboardEvent& kbe)
@@ -100,6 +107,11 @@ void MainMenu::OnMouseDown(const SDL_MouseButtonEvent& mbe)
 
 		if (mBtnNew->Contains(mbe.x, mbe.y)) {
 			mGame->GetGameplayState()->LoadLevel();     // reset everything
+			mGame->EnterGameplay();
+		}
+
+		if (mBtnMainScreen->Contains(mbe.x, mbe.y)) {
+			mGame->GetGameplayState()->LoadLevel();
 			mGame->EnterGameplay();
 		}
 
