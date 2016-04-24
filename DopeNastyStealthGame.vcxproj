@@ -114,7 +114,6 @@
     <ClInclude Include="include\GameState.h" />
     <ClInclude Include="include\MainMenu.h" />
     <ClInclude Include="include\Random.h" />
-    <ClInclude Include="include\Spatial.h" />
     <ClInclude Include="include\System.h" />
     <ClInclude Include="include\Text.h" />
     <ClInclude Include="include\Timer.h" />

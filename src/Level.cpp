@@ -7,9 +7,6 @@
 #include "Gameplay.h"
 
 Level::Level(const std::string& filename) {
-	// Create spatial hash map
-	mSpatial = new Spatial(System::GetWindowWidth(), System::GetWindowHeight(), 50);
-
 	Entities.clear();
 	Walls.clear();
 
@@ -26,8 +23,6 @@ Level::Level(const std::string& filename) {
 }
 
 Level::~Level() {
-	delete mSpatial;
-
 	for (Wall* w : Walls) {
 		delete w;
 	}
@@ -60,44 +55,53 @@ void Level::LoadWalls(const std::string& filename) {
 	int tileHeight = 50;
 
 	int row = 0, col = 0;
+	int x = 0, y = 0;
 	for (std::string line : lines) {
 		for (char c : line) {
 			switch (c) {
 			case '#':
 				Walls.push_back(new Wall({ col, row, 50, 50 }, WallPlane::WP_None));
+				Map[x][y] = true;
 				break;
 			case ']':
 				Walls.push_back(new Wall({ col, row, 50, 10 }, WallPlane::WP_Top));
 				Walls.push_back(new Wall({ col + 40, row, 10, 50 }, WallPlane::WP_Right));
+				Map[x][y] = true;
 				break;
 			case '[':
 				Walls.push_back(new Wall({ col, row, 50, 10 }, WallPlane::WP_Top));
 				Walls.push_back(new Wall({ col, row, 10, 50 }, WallPlane::WP_Left));
+				Map[x][y] = true;
 				break;
 			case '{':
 				Walls.push_back(new Wall({ col, row + 40, 50, 10 }, WallPlane::WP_Bottom));
 				Walls.push_back(new Wall({ col, row, 10, 50 }, WallPlane::WP_Left));
+				Map[x][y] = true;
 				break;
 			case '}':
 				Walls.push_back(new Wall({ col, row + 40, 50, 10 }, WallPlane::WP_Bottom));
 				Walls.push_back(new Wall({ col + 40, row, 10, 50 }, WallPlane::WP_Right));
+				Map[x][y] = true;
 				break;
 			case '>':
 				Walls.push_back(new Wall({ col + 40, row, 10, 50 }, WallPlane::WP_Right));
 				Walls.push_back(new Wall({ col, row, 50, 10 }, WallPlane::WP_Top));
 				Walls.push_back(new Wall({ col, row, 50, 50 }, WallPlane::WP_None));
 				Walls.push_back(new Wall({ col, row + 40, 50, 10 }, WallPlane::WP_Bottom));
+				Map[x][y] = true;
 				break;
 			case '<':
 				Walls.push_back(new Wall({ col, row, 10, 50 }, WallPlane::WP_Left));
 				Walls.push_back(new Wall({ col, row, 50, 10 }, WallPlane::WP_Top));
 				Walls.push_back(new Wall({ col, row, 50, 50 }, WallPlane::WP_None));
 				Walls.push_back(new Wall({ col, row + 40, 50, 10 }, WallPlane::WP_Bottom));
+				Map[x][y] = true;
 				break;
 			case '|':
 				Walls.push_back(new Wall({ col, row, 10, 50 }, WallPlane::WP_Left));
 				Walls.push_back(new Wall({ col, row, 50, 50 }, WallPlane::WP_None));
 				Walls.push_back(new Wall({ col + 40, row, 10, 50 }, WallPlane::WP_Right));
+				Map[x][y] = true;
 				break;
 			case '-':
 				Walls.push_back(new Wall({ col, row - 10, 50, 10 }, WallPlane::WP_Bottom));
@@ -109,12 +113,15 @@ void Level::LoadWalls(const std::string& filename) {
 				Walls.push_back(new Wall({ col, row, 50, 10 }, WallPlane::WP_Top));
 				Walls.push_back(new Wall({ col, row, 50, 50 }, WallPlane::WP_None));
 				Walls.push_back(new Wall({ col, row + 40, 50, 10 }, WallPlane::WP_Bottom));
+				Map[x][y] = true;
 				break;
 			case 'l':
 				Walls.push_back(new Wall({ col - 40, row, 90, 50 }, WallPlane::WP_Left));
+				Map[x][y] = true;
 				break;
 			case 'r':
 				Walls.push_back(new Wall({ col, row, 90, 50 }, WallPlane::WP_Right));
+				Map[x][y] = true;
 				break;
 			case 'P':
 			{
@@ -141,14 +148,17 @@ void Level::LoadWalls(const std::string& filename) {
 				EndPortal = new Portal(Vec2(
 					(float)(col + Gameplay::PortalTex->GetWidth() / 2),
 					(float)(row + Gameplay::PortalTex->GetHeight() / 2)
-				), Gameplay::PortalTex);
+					), Gameplay::PortalTex);
 			}
 			break;
 			}
 
+			++x;
 			col += 50;
 		}
 
+		x = 0;
+		++y;
 		col = 0;
 		row += 50;
 	}
@@ -284,10 +294,10 @@ void Level::Draw(SDL_Renderer* renderer) {
 	SDL_RenderFillRect(renderer, &bLeft);
 
 	// Grid
-	int size = mSpatial->Cellsize();
+	int size = 50;
 	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 25);
-	for (int col = 0; col < mSpatial->Cols(); ++col) {
-		for (int row = 0; row < mSpatial->Rows(); ++row) {
+	for (int col = 0; col < System::GetWindowWidth() / size; ++col) {
+		for (int row = 0; row < System::GetWindowHeight() / size; ++row) {
 			SDL_Rect rect = { col * size, row * size, size, size };
 			SDL_RenderDrawRect(renderer, &rect);
 		}
@@ -305,29 +315,72 @@ void Level::Draw(SDL_Renderer* renderer) {
 	Light(renderer, MainPlayer, 0, 246, 255, 35);
 	if (Gameplay::DrawHitboxes) Hitbox(renderer, MainPlayer);
 
-	// Level walls
-	for (Wall* w : Walls) {
-		w->Draw(renderer);
-	}
+	// Portals
+	EndPortal->Draw(renderer);
 
 	// Entities
 	for (auto e : Entities) {
 		e->Draw(renderer);
 	}
 
+	// Player
 	MainPlayer->Draw(renderer);
 
-	// Portals
-	EndPortal->Draw(renderer);
+	// Level walls
+	for (Wall* w : Walls) {
+		w->Draw(renderer);
+	}
 }
 
 void Level::Update(float dt) {
-	// Reset spatial hashmap
-	mSpatial->ClearCells();
-
 	for (auto e : Entities) {
 		e->Update(dt);
+
+		if (Enemy* en = dynamic_cast<Enemy*>(e)) {
+			bool canSeePlayer = Raycast(MainPlayer, e);
+			if (!canSeePlayer) {
+				en->UnSee();
+				continue;
+			}
+
+			float dist = Vec2::Distance(MainPlayer->Center, e->Center);
+
+			// Is the entity out of range?
+			if (dist > 300) {
+				en->UnSee();
+				continue;
+			}
+
+			en->See();
+		}
 	}
 
 	MainPlayer->Update(dt);
+}
+
+bool Level::Raycast(const Entity* from, const Entity* to) const {
+	// Don't check self-raycasts
+	if (from == to) return false;
+
+	float steps = 25;
+	bool seen = true;
+
+	Vec2 iterPoint = from->Center;
+	float x = (to->Center.x - from->Center.x) / steps;
+	float y = (to->Center.y - from->Center.y) / steps;
+
+	for (int i = 0; i < steps; ++i) {
+		iterPoint.x += x;
+		iterPoint.y += y;
+
+		int cellX = (int)std::floor(iterPoint.x / 50);
+		int cellY = (int)std::floor(iterPoint.y / 50);
+
+		if (Map[cellX][cellY]) {
+			seen = false;
+			break;
+		}
+	}
+
+	return seen;
 }

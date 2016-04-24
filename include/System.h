@@ -13,6 +13,7 @@ namespace System {
 	void            SetWindowSize(int w, int h);
 	void            SetWindowTitle(const char* title);
 
+	SDL_DisplayMode& GetDisplayMode();
 	SDL_Renderer*   GetRenderer();
 	const Uint8*    GetKeyStates();
 

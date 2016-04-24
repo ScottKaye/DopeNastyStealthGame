@@ -17,12 +17,19 @@ class Enemy : public Entity {
 	unsigned mPathIndex = 0;
 	float mSpeed;
 
+	bool seeing = false;
+	float seenTime = 0;
+	float mVigilance = 300;
+
 public:
 	Enemy(const Vec2& pos, const Texture* tex);
 	~Enemy() override;
 
+	void		Draw(SDL_Renderer*) const;
 	bool		Update(float dt) override;
 	void		SetDirection(EnemyDirection dir) { mDir = dir; }
 	void		SetPath(std::vector<EnemyAction> path) { mPath = path; }
 	void		GoToNextLocation();
+	void		See();
+	void		UnSee();  // midnight coding
 };

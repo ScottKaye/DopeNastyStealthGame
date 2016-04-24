@@ -19,6 +19,8 @@ namespace {
 	float           g_Time = 0.0f;
 	float           g_TimeSinceLastFrame = 0.0f;
 
+	SDL_DisplayMode g_DisplayMode;
+
 	Uint64          g_FrameNo = 0;
 
 	bool            g_ShouldQuit = false;
@@ -39,6 +41,10 @@ namespace System {
 
 	int GetWindowHeight() {
 		return g_WindowHeight;
+	}
+
+	SDL_DisplayMode& GetDisplayMode() {
+		return g_DisplayMode;
 	}
 
 	void SetWindowSize(int w, int h) {
@@ -150,6 +156,10 @@ int main(int argc, char** argv) {
 	}
 
 	SDL_SetRenderDrawBlendMode(g_Renderer, SDL_BLENDMODE_BLEND);
+
+	// Get display mode
+	SDL_DisplayMode target;
+	SDL_GetClosestDisplayMode(0, &target, &g_DisplayMode);
 
 	// Create game
 	Game* game = new Game();

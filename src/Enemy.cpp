@@ -1,5 +1,6 @@
 #include <iostream>
 
+#include "System.h"
 #include "Enemy.h"
 
 Enemy::Enemy(const Vec2& pos, const Texture* tex)
@@ -12,7 +13,29 @@ Enemy::~Enemy() {
 	mPath.clear();
 }
 
+void Enemy::Draw(SDL_Renderer* renderer) const {
+	Entity::Draw(renderer);
+
+	float barWidth = 30;
+	float filledWidth = (seenTime / mVigilance) * barWidth;
+
+	// Background
+	SDL_Rect seeingRect = { Center.x - barWidth / 2, Center.y - 15, barWidth, 3 };
+	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 32);
+	SDL_RenderFillRect(renderer, &seeingRect);
+
+	// Filled part
+	SDL_Rect filledRect = { Center.x - barWidth / 2, Center.y - 15, filledWidth, 3 };
+	SDL_SetRenderDrawColor(renderer, 255, 255, 0, 255);
+	SDL_RenderFillRect(renderer, &filledRect);
+}
+
 bool Enemy::Update(float dt) {
+	if (!seeing && seenTime > 0) --seenTime;
+	if (seeing && seenTime >= mVigilance) {
+		std::cout << "damn son" << std::endl;
+	}
+
 	if (mPath.size() == 0) return true;
 
 	// Current path action
@@ -39,7 +62,7 @@ bool Enemy::Update(float dt) {
 				break;
 			}
 			break;
-		// Rotations are hardcoded rather than using scary math
+			// Rotations are hardcoded rather than using scary math
 		case EnemyAction::EA_TurnLeft:
 			switch (mDir) {
 			default:
@@ -116,4 +139,15 @@ void Enemy::GoToNextLocation() {
 	else ++mPathIndex;
 
 	mDone = false;
+}
+
+void Enemy::See() {
+	seeing = true;
+	++seenTime;
+
+	if (seenTime > mVigilance) seenTime = mVigilance;
+}
+
+void Enemy::UnSee() {
+	seeing = false;
 }
