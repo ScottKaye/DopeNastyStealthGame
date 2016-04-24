@@ -33,7 +33,9 @@ void Enemy::Draw(SDL_Renderer* renderer) const {
 bool Enemy::Update(float dt) {
 	if (!seeing && seenTime > 0) --seenTime;
 	if (seeing && seenTime >= mVigilance) {
-		std::cout << "damn son" << std::endl;
+		seenTime = 0;
+		seeing = false;
+		return false;
 	}
 
 	if (mPath.size() == 0) return true;

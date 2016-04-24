@@ -8,17 +8,21 @@
 #include "System.h"
 #include "Player.h"
 #include "Random.h"
-#include "Team.h"
 #include "Level.h"
 #include "Gameplay.h"
 #include "MainMenu.h"
+#include "GameOver.h"
+#include "EndGame.h"
 
 class GameState;
 
 class Game {
 	Gameplay*               mGameplayState;
 	MainMenu*               mMainMenuState;
+	GameOver*				mGameOverState;
 	GameState*              mCurrentState;
+	EndGame*				mEndGameState;
+
 
 public:
 	Game();

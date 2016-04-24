@@ -11,6 +11,7 @@ class Button
 public:
 	Button(Texture* tex);
 	Button(Texture* tex, int x, int y);
+	Button(int x, int y, int w, int h);
 
 	~Button();
 

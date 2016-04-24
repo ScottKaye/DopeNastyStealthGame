@@ -9,6 +9,8 @@ Game::Game()
 	: mGameplayState(NULL)
 	, mMainMenuState(NULL)
 	, mCurrentState(NULL)
+	, mGameOverState(NULL)
+	, mEndGameState(NULL)
 { }
 
 bool Game::Initialize() {
@@ -21,14 +23,18 @@ bool Game::Initialize() {
 	// Get renderer
 	SDL_Renderer* renderer = System::GetRenderer();
 
-	// Create all game states
-	mGameplayState = new Gameplay(this);
-	if (!mGameplayState->Initialize()) {
+	mMainMenuState = new MainMenu(this);
+	if (!mMainMenuState->Initialize()) {
 		return false;
 	}
 
-	mMainMenuState = new MainMenu(this);
-	if (!mMainMenuState->Initialize()) {
+	mEndGameState = new EndGame(this);
+	if (!mEndGameState->Initialize()) {
+		return false;
+	}
+
+	mGameOverState = new GameOver(this);
+	if (!mGameOverState->Initialize()) {
 		return false;
 	}
 
@@ -43,6 +49,9 @@ Game::~Game() {
 
 	delete mMainMenuState;
 	delete mGameplayState;
+	delete mEndGameState;
+	delete mGameOverState;
+
 }
 
 void Game::Draw(SDL_Renderer* renderer) {
@@ -50,7 +59,8 @@ void Game::Draw(SDL_Renderer* renderer) {
 }
 
 void Game::Update(float dt) {
-	mCurrentState->Update(dt);
+	bool safe = mCurrentState->Update(dt);
+	if (!safe) mCurrentState = mGameOverState;
 }
 
 void Game::OnKeyDown(const SDL_KeyboardEvent& kbe) {
@@ -78,5 +88,12 @@ void Game::EnterMainMenu() {
 }
 
 void Game::EnterGameplay() {
+	if (mGameplayState != NULL) {
+		delete mGameplayState;
+		mGameplayState = NULL;
+	}
+
+	mGameplayState = new Gameplay(this);
+	mGameplayState->Initialize();
 	mCurrentState = mGameplayState;
 }

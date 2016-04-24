@@ -24,5 +24,5 @@ public:
 
 	bool Raycast(const Entity*, const Entity*) const;
 	void Draw(SDL_Renderer*);
-	void Update(float);
+	bool Update(float);
 };

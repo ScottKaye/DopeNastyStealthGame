@@ -332,10 +332,11 @@ void Level::Draw(SDL_Renderer* renderer) {
 	}
 }
 
-void Level::Update(float dt) {
+bool Level::Update(float dt) {
 	for (auto e : Entities) {
-		e->Update(dt);
-
+		bool safe = e->Update(dt);
+		if (!safe) return false;
+		
 		if (Enemy* en = dynamic_cast<Enemy*>(e)) {
 			bool canSeePlayer = Raycast(MainPlayer, e);
 			if (!canSeePlayer) {
@@ -356,6 +357,7 @@ void Level::Update(float dt) {
 	}
 
 	MainPlayer->Update(dt);
+	return true;
 }
 
 bool Level::Raycast(const Entity* from, const Entity* to) const {

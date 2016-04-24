@@ -90,6 +90,8 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\EndGame.cpp" />
+    <ClCompile Include="src\GameOver.cpp" />
     <ClCompile Include="src\Portal.cpp" />
     <ClCompile Include="src\Enemy.cpp" />
     <ClCompile Include="src\Level.cpp" />
@@ -103,6 +105,8 @@
     <ClCompile Include="src\System.cpp" />
     <ClCompile Include="src\Texture.cpp" />
     <ClCompile Include="src\Wall.cpp" />
+    <ClInclude Include="include\EndGame.h" />
+    <ClInclude Include="include\GameOver.h" />
     <ClInclude Include="include\EnemyAction.h" />
     <ClInclude Include="include\Enemy.h" />
     <ClInclude Include="include\Animation.h" />

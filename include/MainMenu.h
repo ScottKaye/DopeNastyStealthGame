@@ -23,7 +23,7 @@ public:
 
 	bool                Initialize() override;
 
-	void                Update(float dt) override;
+	bool                Update(float dt) override;
 	void                Draw(SDL_Renderer* renderer) override;
 
 	void		        OnKeyDown(const SDL_KeyboardEvent& kbe) override;

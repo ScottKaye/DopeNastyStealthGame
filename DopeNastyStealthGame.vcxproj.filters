@@ -36,6 +36,12 @@
     </ClCompile>
     <ClCompile Include="src\Enemy.cpp" />
     <ClCompile Include="src\Portal.cpp" />
+    <ClCompile Include="src\GameOver.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="src\EndGame.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Entity.h">
@@ -100,6 +106,12 @@
       <Filter>Game Elements</Filter>
     </ClInclude>
     <ClInclude Include="include\Portal.h" />
+    <ClInclude Include="include\EndGame.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="include\GameOver.h">
+      <Filter>UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />

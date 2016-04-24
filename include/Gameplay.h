@@ -1,5 +1,4 @@
-#ifndef GAMEPLAY_H_
-#define GAMEPLAY_H_
+#pragma once
 #include <vector>
 #include <time.h>
 #include "GameState.h"
@@ -7,7 +6,6 @@
 #include "Player.h"
 
 #include "Random.h"
-#include "Team.h"
 #include "Level.h"
 #include "MainMenu.h"
 
@@ -16,19 +14,18 @@
 
 class Gameplay : public GameState
 {
-	bool                    mIsActive;
+	
 
 public:
 	Gameplay(Game* game);
 	~Gameplay() override;
 
-	bool                    IsActive() const { return mIsActive; }
 
 	bool                    Initialize() override;
 
 	void                    LoadLevel();
 
-	void                    Update(float dt) override;
+	bool                    Update(float dt) override;
 	void                    Draw(SDL_Renderer* renderer) override;
 
 	void		            OnKeyDown(const SDL_KeyboardEvent& kbe) override;
@@ -47,4 +44,3 @@ public:
 
 };
 
-#endif

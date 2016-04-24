@@ -17,6 +17,15 @@ Button::Button(Texture* tex, int x, int y)
 	mRect.h = tex->GetHeight();
 }
 
+Button::Button(int x, int y, int w, int h)
+	: mRect()
+{
+	mRect.x = x;
+	mRect.y = y;
+	mRect.w = w;
+	mRect.h = h;
+}
+
 Button::~Button() {
 	
 }

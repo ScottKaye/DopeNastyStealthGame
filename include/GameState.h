@@ -20,7 +20,7 @@ public:
 
 	virtual bool        Initialize() = 0;
 
-	virtual void        Update(float dt) = 0;
+	virtual bool        Update(float dt) = 0;
 	virtual void        Draw(SDL_Renderer* renderer) = 0;
 
 	virtual void	    OnWindowResized(int w, int h) {}

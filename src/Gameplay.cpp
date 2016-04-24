@@ -14,7 +14,6 @@ bool					Gameplay::DrawHitboxes;
 
 Gameplay::Gameplay(Game* game)
 	: GameState(game)
-	, mIsActive(false)
 {
 	Gameplay::DrawHitboxes = true;
 }
@@ -50,9 +49,9 @@ void Gameplay::LoadLevel() {
 	CurrentLevel = new Level("levels/1");
 }
 
-void Gameplay::Update(float dt) {
+bool Gameplay::Update(float dt) {
 	// Update level
-	CurrentLevel->Update(dt);
+	return CurrentLevel->Update(dt);
 }
 
 void Gameplay::Draw(SDL_Renderer* renderer) {

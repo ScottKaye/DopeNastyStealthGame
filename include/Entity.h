@@ -3,7 +3,6 @@
 #include <vector>
 #include <math.h>
 
-#include "Team.h"
 #include "Vec2.h"
 #include "Texture.h"
 
