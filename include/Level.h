@@ -7,11 +7,8 @@
 #include "Wall.h"
 #include "Enemy.h"
 #include "Portal.h"
-#include "Spatial.h"
 
 class Level {
-	Spatial*				mSpatial;
-
 	void LoadWalls(const std::string& filename);
 	void LoadPaths(const std::string& filename);
 
