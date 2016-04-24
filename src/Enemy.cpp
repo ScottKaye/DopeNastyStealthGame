@@ -20,12 +20,12 @@ void Enemy::Draw(SDL_Renderer* renderer) const {
 	float filledWidth = (seenTime / mVigilance) * barWidth;
 
 	// Background
-	SDL_Rect seeingRect = { Center.x - barWidth / 2, Center.y - 15, barWidth, 3 };
+	SDL_Rect seeingRect = { (int)(Center.x - barWidth / 2), (int)(Center.y - 15), (int)barWidth, 3 };
 	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 32);
 	SDL_RenderFillRect(renderer, &seeingRect);
 
 	// Filled part
-	SDL_Rect filledRect = { Center.x - barWidth / 2, Center.y - 15, filledWidth, 3 };
+	SDL_Rect filledRect = { (int)(Center.x - barWidth / 2), (int)(Center.y - 15), (int)filledWidth, 3 };
 	SDL_SetRenderDrawColor(renderer, 255, 255, 0, 255);
 	SDL_RenderFillRect(renderer, &filledRect);
 }

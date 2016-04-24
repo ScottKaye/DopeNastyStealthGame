@@ -11,7 +11,6 @@ Texture::Texture(SDL_Texture* tex, int width, int height)
 	, mHeight(height)
 { }
 
-
 Texture::~Texture() {
 	if (mSDLTex) {
 		SDL_DestroyTexture(mSDLTex);

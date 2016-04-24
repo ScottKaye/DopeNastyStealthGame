@@ -3,11 +3,9 @@
 #include <vector>
 #include <time.h>
 #include <SDL.h>
-#include <SDL_ttf.h>
 
 #include "System.h"
 #include "Player.h"
-#include "Random.h"
 #include "Level.h"
 #include "Gameplay.h"
 #include "MainMenu.h"
@@ -22,7 +20,6 @@ class Game {
 	GameOver*				mGameOverState;
 	GameState*              mCurrentState;
 	EndGame*				mEndGameState;
-
 
 public:
 	Game();
@@ -44,5 +41,4 @@ public:
 
 	void                    EnterMainMenu();
 	void                    EnterGameplay();
-
 };

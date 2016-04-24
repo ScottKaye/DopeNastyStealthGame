@@ -8,14 +8,13 @@ Portal::Portal(const Vec2& pos, const Texture* tex)
 }
 
 Portal::~Portal() {
-	
+
 }
 
 bool Portal::Update(float dt) {
-
 	return true;
 }
 
-void Portal::loadNextLevel()
-{
+void Portal::loadNextLevel() {
+
 }

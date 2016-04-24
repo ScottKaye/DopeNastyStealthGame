@@ -1,9 +1,9 @@
+#include <iostream>
+
 #include "EndGame.h"
 #include "Gameplay.h"
 #include "Texture.h"
 #include "Game.h"
-
-#include <iostream>
 
 EndGame::EndGame(Game* game)
 	: GameState(game)
@@ -22,20 +22,16 @@ bool EndGame::Initialize() {
 	SDL_Renderer* renderer = System::GetRenderer();
 
 	mBtnEndGameTex = Texture::Load("media/game_over.png", renderer);
-
 	mBtnEndGame = new Button(mBtnEndGameTex);
 
-
 	return true;
 }
 
-bool EndGame::Update(float dt)
-{
+bool EndGame::Update(float dt) {
 	return true;
 }
 
-void EndGame::Draw(SDL_Renderer* renderer)
-{
+void EndGame::Draw(SDL_Renderer* renderer) {
 
 	mGame->GetGameplayState()->Draw(renderer);
 
@@ -47,8 +43,7 @@ void EndGame::Draw(SDL_Renderer* renderer)
 	mBtnEndGame->Draw(renderer);
 }
 
-void EndGame::OnKeyDown(const SDL_KeyboardEvent& kbe)
-{
+void EndGame::OnKeyDown(const SDL_KeyboardEvent& kbe) {
 	switch (kbe.keysym.sym) {
 	case SDLK_ESCAPE:
 		mGame->EnterGameplay();
@@ -56,15 +51,10 @@ void EndGame::OnKeyDown(const SDL_KeyboardEvent& kbe)
 	}
 }
 
-void EndGame::OnMouseDown(const SDL_MouseButtonEvent& mbe)
-{
+void EndGame::OnMouseDown(const SDL_MouseButtonEvent& mbe) {
 	if (mbe.button == SDL_BUTTON_LEFT) {
-
-
 		if (mBtnEndGame->Contains(mbe.x, mbe.y)) {
 			System::Quit();
 		}
-
-
 	}
 }

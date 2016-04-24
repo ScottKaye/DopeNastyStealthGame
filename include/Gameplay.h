@@ -1,25 +1,19 @@
 #pragma once
+
 #include <vector>
 #include <time.h>
+
 #include "GameState.h"
 #include "System.h"
 #include "Player.h"
-
-#include "Random.h"
 #include "Level.h"
 #include "MainMenu.h"
 
-
-#include <vector>
-
-class Gameplay : public GameState
-{
-	
+class Gameplay : public GameState {
 
 public:
 	Gameplay(Game* game);
 	~Gameplay() override;
-
 
 	bool                    Initialize() override;
 
@@ -41,6 +35,4 @@ public:
 	static Level*			CurrentLevel;
 
 	static bool DrawHitboxes;
-
 };
-

@@ -336,7 +336,7 @@ bool Level::Update(float dt) {
 	for (auto e : Entities) {
 		bool safe = e->Update(dt);
 		if (!safe) return false;
-		
+
 		if (Enemy* en = dynamic_cast<Enemy*>(e)) {
 			bool canSeePlayer = Raycast(MainPlayer, e);
 			if (!canSeePlayer) {

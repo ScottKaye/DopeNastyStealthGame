@@ -1,7 +1,5 @@
 #include <iostream>
-#include <climits>
 
-#include "Constants.h"
 #include "Game.h"
 #include "Player.h"
 #include "System.h"

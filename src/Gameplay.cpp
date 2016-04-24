@@ -1,11 +1,10 @@
+#include <iostream>
+
 #include "Gameplay.h"
 #include "Texture.h"
 #include "Game.h"
-#include "Constants.h"
 
-#include <iostream>
-
-//resolve externs
+// Resolve externs
 Texture*				Gameplay::PlayerTex;
 Texture*				Gameplay::EnemyTex;
 Texture*				Gameplay::PortalTex;
@@ -34,9 +33,7 @@ bool Gameplay::Initialize() {
 	// Get renderer
 	SDL_Renderer* renderer = System::GetRenderer();
 
-	//
 	// Load all textures
-	//
 	PlayerTex = Texture::Load("media/player.png", renderer);
 	EnemyTex = Texture::Load("media/enemy.png", renderer);
 	PortalTex = Texture::Load("media/portal.png", renderer);
@@ -55,7 +52,7 @@ bool Gameplay::Update(float dt) {
 }
 
 void Gameplay::Draw(SDL_Renderer* renderer) {
-	// clear the screen
+	// Clear the screen
 	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 	SDL_RenderClear(renderer);
 

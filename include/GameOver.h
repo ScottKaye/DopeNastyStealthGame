@@ -1,18 +1,15 @@
 #pragma once
 
-
 #include "GameState.h"
 #include "Button.h"
 #include "Texture.h"
 
-class GameOver : public GameState
-{
+class GameOver : public GameState {
 	Texture*            mBtnGameOverTex;
 
 	Button*             mBtnContinue;
 	Button*             mBtnQuit;
 	Button*				mBtnGameOver;
-
 
 public:
 	GameOver(Game* game);
@@ -26,4 +23,3 @@ public:
 	void		        OnKeyDown(const SDL_KeyboardEvent& kbe) override;
 	void		        OnMouseDown(const SDL_MouseButtonEvent& mbe) override;
 };
-

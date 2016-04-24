@@ -1,9 +1,9 @@
+#include <iostream>
+
 #include "GameOver.h"
 #include "Gameplay.h"
 #include "Texture.h"
 #include "Game.h"
-
-#include <iostream>
 
 GameOver::GameOver(Game* game)
 	: GameState(game)
@@ -31,30 +31,24 @@ bool GameOver::Initialize() {
 	mBtnQuit = new Button(507, 411, 170, 62);
 	mBtnGameOver = new Button(mBtnGameOverTex, 0, 0);
 
-
 	return true;
 }
 
-bool GameOver::Update(float dt)
-{
+bool GameOver::Update(float dt) {
 	return true;
 }
 
-void GameOver::Draw(SDL_Renderer* renderer)
-{
-
+void GameOver::Draw(SDL_Renderer* renderer) {
 	mGame->GetGameplayState()->Draw(renderer);
 
 	SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
 	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 192);
 	SDL_RenderFillRect(renderer, NULL);
 
-
 	mBtnGameOver->Draw(renderer);
 }
 
-void GameOver::OnKeyDown(const SDL_KeyboardEvent& kbe)
-{
+void GameOver::OnKeyDown(const SDL_KeyboardEvent& kbe) {
 	switch (kbe.keysym.sym) {
 	case SDLK_ESCAPE:
 		mGame->EnterGameplay();
@@ -62,8 +56,7 @@ void GameOver::OnKeyDown(const SDL_KeyboardEvent& kbe)
 	}
 }
 
-void GameOver::OnMouseDown(const SDL_MouseButtonEvent& mbe)
-{
+void GameOver::OnMouseDown(const SDL_MouseButtonEvent& mbe) {
 	if (mbe.button == SDL_BUTTON_LEFT) {
 		if (mBtnContinue->Contains(mbe.x, mbe.y)) {
 			mGame->EnterGameplay();

@@ -1,9 +1,9 @@
+#include <iostream>
+
 #include "MainMenu.h"
 #include "Gameplay.h"
 #include "Texture.h"
 #include "Game.h"
-
-#include <iostream>
 
 MainMenu::MainMenu(Game* game)
 	: GameState(game)
@@ -31,18 +31,15 @@ bool MainMenu::Initialize() {
 	return true;
 }
 
-bool MainMenu::Update(float dt)
-{
+bool MainMenu::Update(float dt) {
 	return true;
 }
 
-void MainMenu::Draw(SDL_Renderer* renderer)
-{
+void MainMenu::Draw(SDL_Renderer* renderer) {
 	mBtnMainScreen->Draw(renderer);
 }
 
-void MainMenu::OnKeyDown(const SDL_KeyboardEvent& kbe)
-{
+void MainMenu::OnKeyDown(const SDL_KeyboardEvent& kbe) {
 	switch (kbe.keysym.sym) {
 	case SDLK_ESCAPE:
 		mGame->EnterGameplay();
@@ -50,8 +47,7 @@ void MainMenu::OnKeyDown(const SDL_KeyboardEvent& kbe)
 	}
 }
 
-void MainMenu::OnMouseDown(const SDL_MouseButtonEvent& mbe)
-{
+void MainMenu::OnMouseDown(const SDL_MouseButtonEvent& mbe) {
 	if (mbe.button == SDL_BUTTON_LEFT) {
 		if (mBtnMainScreen->Contains(mbe.x, mbe.y)) {
 			mGame->EnterGameplay();

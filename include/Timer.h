@@ -37,7 +37,7 @@ public:
 			Uint32 now = SDL_GetTicks();
 			return 0.001f * (now - mStartTime);
 		}
-	
+
 		return 0.001f * (mPauseTime - mStartTime);
 	}
 };

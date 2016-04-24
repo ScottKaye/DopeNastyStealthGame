@@ -3,8 +3,6 @@
 #include "Entity.h"
 #include "Texture.h"
 #include "Vec2.h"
-#include "Random.h"
-#include "Util.h"
 
 class Player : public Entity {
 	float                   mSpeed;

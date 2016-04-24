@@ -1,16 +1,10 @@
 #include <iostream>
 #include <string>
 
-#include "Constants.h"
 #include "Game.h"
-#include "Text.h"
 
 Game::Game()
 	: mGameplayState(NULL)
-	, mMainMenuState(NULL)
-	, mCurrentState(NULL)
-	, mGameOverState(NULL)
-	, mEndGameState(NULL)
 { }
 
 bool Game::Initialize() {
@@ -51,7 +45,6 @@ Game::~Game() {
 	delete mGameplayState;
 	delete mEndGameState;
 	delete mGameOverState;
-
 }
 
 void Game::Draw(SDL_Renderer* renderer) {
