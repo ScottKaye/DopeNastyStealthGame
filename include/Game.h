@@ -41,4 +41,5 @@ public:
 
 	void                    EnterMainMenu();
 	void                    EnterGameplay();
+	void					EnterEndGame();
 };

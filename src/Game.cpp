@@ -39,7 +39,7 @@ bool Game::Initialize() {
 }
 
 Game::~Game() {
-	std::cout << "Shutting down game (from actually within game.cpp)" << std::endl;
+	std::cout << "Shutting down game" << std::endl;
 
 	delete mMainMenuState;
 	delete mGameplayState;
@@ -89,4 +89,8 @@ void Game::EnterGameplay() {
 	mGameplayState = new Gameplay(this);
 	mGameplayState->Initialize();
 	mCurrentState = mGameplayState;
+}
+
+void Game::EnterEndGame() {
+	mCurrentState = mEndGameState;
 }

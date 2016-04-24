@@ -11,6 +11,7 @@
 class Level {
 	void LoadWalls(const std::string&);
 	void LoadPaths(const std::string&);
+	bool mComplete;
 
 public:
 	Level(const std::string&);
@@ -25,4 +26,5 @@ public:
 	bool Raycast(const Entity*, const Entity*) const;
 	void Draw(SDL_Renderer*);
 	bool Update(float);
+	bool Complete() const { return mComplete; }
 };

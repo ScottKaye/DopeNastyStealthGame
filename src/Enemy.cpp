@@ -6,7 +6,12 @@
 
 Enemy::Enemy(const Vec2& pos, const Texture* tex)
 	: Entity(pos, tex)
-	, mSpeed(50) {
+	, mSpeed(50)
+	, mSeeing(false)
+	, mSeenTime(0)
+	, mVisionRange(200)
+	, mStupidity(300)
+{
 	SetHitRadius(10);
 }
 
@@ -18,7 +23,7 @@ void Enemy::Draw(SDL_Renderer* renderer) const {
 	Entity::Draw(renderer);
 
 	float barWidth = 30;
-	float filledWidth = (seenTime / mVigilance) * barWidth;
+	float filledWidth = (mSeenTime / mStupidity) * barWidth;
 
 	// Background
 	SDL_Rect seeingRect = { (int)(Center.x - barWidth / 2), (int)(Center.y - 15), (int)barWidth, 3 };
@@ -32,13 +37,13 @@ void Enemy::Draw(SDL_Renderer* renderer) const {
 }
 
 bool Enemy::Update(float dt) {
-	if (!seeing && seenTime > 0) --seenTime;
-	if (seeing && seenTime >= mVigilance) {
-		seenTime = 0;
-		seeing = false;
+	if (!mSeeing && mSeenTime > 0) --mSeenTime;
+	if (mSeeing && mSeenTime >= mStupidity) {
+		mSeenTime = 0;
+		mSeeing = false;
 		return false;
 	}
-	
+
 	if (mPath.size() == 0) return true;
 
 	// Current path action
@@ -146,13 +151,13 @@ void Enemy::GoToNextLocation() {
 
 void Enemy::See() {
 	if (!Gameplay::GodMode) {
-		seeing = true;
-		++seenTime;
+		mSeeing = true;
+		++mSeenTime;
 
-		if (seenTime > mVigilance) seenTime = mVigilance;
+		if (mSeenTime > mStupidity) mSeenTime = mStupidity;
 	}
 }
 
 void Enemy::UnSee() {
-	seeing = false;
+	mSeeing = false;
 }

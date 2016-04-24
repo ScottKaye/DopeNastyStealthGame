@@ -10,6 +10,8 @@
 #include "MainMenu.h"
 
 class Gameplay : public GameState {
+	unsigned mLevelIndex;
+	unsigned const mMaxLevels = 2;
 
 public:
 	Gameplay(Game* game);
@@ -28,6 +30,7 @@ public:
 	float                   WorldRight() const { return (float)System::GetWindowWidth(); }
 	float                   WorldTop() const { return 0.0f; }
 	float                   WorldBottom() const { return (float)System::GetWindowHeight(); }
+	void					NextLevel();
 
 	static Texture*			PlayerTex;
 	static Texture*			EnemyTex;

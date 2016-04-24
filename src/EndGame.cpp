@@ -21,7 +21,7 @@ EndGame::~EndGame() {
 bool EndGame::Initialize() {
 	SDL_Renderer* renderer = System::GetRenderer();
 
-	mBtnEndGameTex = Texture::Load("media/game_over.png", renderer);
+	mBtnEndGameTex = Texture::Load("media/endsplash.png", renderer);
 	mBtnEndGame = new Button(mBtnEndGameTex);
 
 	return true;
@@ -32,23 +32,17 @@ bool EndGame::Update(float dt) {
 }
 
 void EndGame::Draw(SDL_Renderer* renderer) {
-
 	mGame->GetGameplayState()->Draw(renderer);
 
 	SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
 	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 192);
 	SDL_RenderFillRect(renderer, NULL);
 
-
 	mBtnEndGame->Draw(renderer);
 }
 
 void EndGame::OnKeyDown(const SDL_KeyboardEvent& kbe) {
-	switch (kbe.keysym.sym) {
-	case SDLK_ESCAPE:
-		mGame->EnterGameplay();
-		break;
-	}
+
 }
 
 void EndGame::OnMouseDown(const SDL_MouseButtonEvent& mbe) {

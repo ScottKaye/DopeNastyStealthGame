@@ -14,6 +14,7 @@ bool					Gameplay::GodMode;
 
 Gameplay::Gameplay(Game* game)
 	: GameState(game)
+	, mLevelIndex(1)
 {
 	Gameplay::DrawHitboxes = true;
 	Gameplay::GodMode = false;
@@ -45,11 +46,28 @@ bool Gameplay::Initialize() {
 
 void Gameplay::LoadLevel() {
 	// Start level
-	CurrentLevel = new Level("levels/1");
+	CurrentLevel = new Level("levels/" + std::to_string(mLevelIndex));
+}
+
+void Gameplay::NextLevel() {
+	if (mLevelIndex >= mMaxLevels) {
+		// You win!
+		mGame->EnterEndGame();
+		return;
+	}
+	else {
+		delete CurrentLevel;
+		++mLevelIndex;
+		LoadLevel();
+	}
 }
 
 bool Gameplay::Update(float dt) {
 	// Update level
+	if (CurrentLevel->Complete()) {
+		NextLevel();
+	}
+
 	return CurrentLevel->Update(dt);
 }
 

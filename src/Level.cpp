@@ -6,7 +6,9 @@
 #include "System.h"
 #include "Gameplay.h"
 
-Level::Level(const std::string& filename) {
+Level::Level(const std::string& filename)
+	: mComplete(false)
+{
 	Entities.clear();
 	Walls.clear();
 
@@ -155,15 +157,20 @@ void Level::LoadWalls(const std::string& filename) {
 
 			++x;
 			col += 50;
+
+			// Don't load OOB
+			if (x > 16) break;
 		}
 
 		x = 0;
 		++y;
 		col = 0;
 		row += 50;
+
+		// Don't load OOB
+		if (y > 12) break;
 	}
 
-	// TODO don't hardcode these numbers
 	Walls.push_back(new Wall({ 0, 0, 50 * 16, 5 }, WallPlane::WP_Bottom));
 	Walls.push_back(new Wall({ 0, 50 * 12 - 5, 50 * 16, 5 }, WallPlane::WP_Top));
 	Walls.push_back(new Wall({ 0, 0, 5, 50 * 12 }, WallPlane::WP_Right));
@@ -276,6 +283,8 @@ void Hitbox(SDL_Renderer* renderer, Entity* ent) {
 }
 
 void Level::Draw(SDL_Renderer* renderer) {
+	if (mComplete) return;
+
 	// Level boundaries
 	int w = System::GetWindowWidth();
 	int h = System::GetWindowHeight();
@@ -333,6 +342,8 @@ void Level::Draw(SDL_Renderer* renderer) {
 }
 
 bool Level::Update(float dt) {
+	if (mComplete) return true;
+
 	for (auto e : Entities) {
 		bool safe = e->Update(dt);
 		if (!safe) return false;
@@ -347,7 +358,7 @@ bool Level::Update(float dt) {
 			float dist = Vec2::Distance(MainPlayer->Center, e->Center);
 
 			// Is the entity out of range?
-			if (dist > 300) {
+			if (dist > en->VisionRange()) {
 				en->UnSee();
 				continue;
 			}
@@ -357,6 +368,11 @@ bool Level::Update(float dt) {
 	}
 
 	MainPlayer->Update(dt);
+
+	if (MainPlayer->CollidesWith(EndPortal)) {
+		mComplete = true;
+	}
+
 	return true;
 }
 
