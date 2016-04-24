@@ -35,7 +35,7 @@
       <Filter>Game Elements</Filter>
     </ClCompile>
     <ClCompile Include="src\Enemy.cpp" />
-    <ClCompile Include="src\Portal.cpp" />
+    <ClCompile Include="Portal.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Entity.h">
@@ -77,6 +77,9 @@
     <ClInclude Include="include\Wall.h">
       <Filter>Game Elements</Filter>
     </ClInclude>
+    <ClInclude Include="include\Spatial.h">
+      <Filter>System\Game Stuff</Filter>
+    </ClInclude>
     <ClInclude Include="include\Powerup.h">
       <Filter>Game Elements</Filter>
     </ClInclude>
@@ -99,7 +102,7 @@
     <ClInclude Include="include\EnemyAction.h">
       <Filter>Game Elements</Filter>
     </ClInclude>
-    <ClInclude Include="include\Portal.h" />
+    <ClInclude Include="Portal.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />
@@ -113,6 +116,9 @@
     </Filter>
     <Filter Include="System">
       <UniqueIdentifier>{34b96ed8-bfd8-4a85-941b-4ce738d15afe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System\Game Stuff">
+      <UniqueIdentifier>{9313295a-7b84-4c3c-a5e0-e4432e50b1f1}</UniqueIdentifier>
     </Filter>
     <Filter Include="UI">
       <UniqueIdentifier>{00ff13f4-b463-4ca3-b837-4430fd158b27}</UniqueIdentifier>

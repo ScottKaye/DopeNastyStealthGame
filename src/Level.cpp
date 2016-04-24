@@ -7,6 +7,9 @@
 #include "Gameplay.h"
 
 Level::Level(const std::string& filename) {
+	// Create spatial hash map
+	mSpatial = new Spatial(System::GetWindowWidth(), System::GetWindowHeight(), 50);
+
 	Entities.clear();
 	Walls.clear();
 
@@ -23,6 +26,8 @@ Level::Level(const std::string& filename) {
 }
 
 Level::~Level() {
+	delete mSpatial;
+
 	for (Wall* w : Walls) {
 		delete w;
 	}
@@ -136,7 +141,7 @@ void Level::LoadWalls(const std::string& filename) {
 				EndPortal = new Portal(Vec2(
 					(float)(col + Gameplay::PortalTex->GetWidth() / 2),
 					(float)(row + Gameplay::PortalTex->GetHeight() / 2)
-					), Gameplay::PortalTex);
+				), Gameplay::PortalTex);
 			}
 			break;
 			}
@@ -279,10 +284,10 @@ void Level::Draw(SDL_Renderer* renderer) {
 	SDL_RenderFillRect(renderer, &bLeft);
 
 	// Grid
-	int size = 50;
+	int size = mSpatial->Cellsize();
 	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 25);
-	for (int col = 0; col < System::GetWindowWidth() / size; ++col) {
-		for (int row = 0; row < System::GetWindowHeight() / size; ++row) {
+	for (int col = 0; col < mSpatial->Cols(); ++col) {
+		for (int row = 0; row < mSpatial->Rows(); ++row) {
 			SDL_Rect rect = { col * size, row * size, size, size };
 			SDL_RenderDrawRect(renderer, &rect);
 		}
@@ -317,6 +322,9 @@ void Level::Draw(SDL_Renderer* renderer) {
 }
 
 void Level::Update(float dt) {
+	// Reset spatial hashmap
+	mSpatial->ClearCells();
+
 	for (auto e : Entities) {
 		e->Update(dt);
 	}
