@@ -10,11 +10,13 @@ Texture*				Gameplay::EnemyTex;
 Texture*				Gameplay::PortalTex;
 Level*					Gameplay::CurrentLevel;
 bool					Gameplay::DrawHitboxes;
+bool					Gameplay::GodMode;
 
 Gameplay::Gameplay(Game* game)
 	: GameState(game)
 {
 	Gameplay::DrawHitboxes = true;
+	Gameplay::GodMode = false;
 }
 
 Gameplay::~Gameplay() {
@@ -67,6 +69,9 @@ void Gameplay::OnKeyDown(const SDL_KeyboardEvent& kbe) {
 		break;
 	case SDLK_b:
 		Gameplay::DrawHitboxes = !Gameplay::DrawHitboxes;
+		break;
+	case SDLK_g:
+		Gameplay::GodMode = !Gameplay::GodMode;
 		break;
 	}
 }

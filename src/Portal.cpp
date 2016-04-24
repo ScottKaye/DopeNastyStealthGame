@@ -1,6 +1,7 @@
 #include <iostream>
 
 #include "Portal.h"
+#include "Gameplay.h"
 
 Portal::Portal(const Vec2& pos, const Texture* tex)
 	: Entity(pos, tex) {
@@ -12,6 +13,7 @@ Portal::~Portal() {
 }
 
 bool Portal::Update(float dt) {
+	// Im going to bed
 	return true;
 }
 

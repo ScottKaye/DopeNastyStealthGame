@@ -2,6 +2,7 @@
 
 #include "System.h"
 #include "Enemy.h"
+#include "Gameplay.h"
 
 Enemy::Enemy(const Vec2& pos, const Texture* tex)
 	: Entity(pos, tex)
@@ -37,7 +38,7 @@ bool Enemy::Update(float dt) {
 		seeing = false;
 		return false;
 	}
-
+	
 	if (mPath.size() == 0) return true;
 
 	// Current path action
@@ -144,10 +145,12 @@ void Enemy::GoToNextLocation() {
 }
 
 void Enemy::See() {
-	seeing = true;
-	++seenTime;
+	if (!Gameplay::GodMode) {
+		seeing = true;
+		++seenTime;
 
-	if (seenTime > mVigilance) seenTime = mVigilance;
+		if (seenTime > mVigilance) seenTime = mVigilance;
+	}
 }
 
 void Enemy::UnSee() {

@@ -35,4 +35,5 @@ public:
 	static Level*			CurrentLevel;
 
 	static bool DrawHitboxes;
+	static bool GodMode;
 };

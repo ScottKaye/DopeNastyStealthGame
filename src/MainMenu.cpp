@@ -40,11 +40,8 @@ void MainMenu::Draw(SDL_Renderer* renderer) {
 }
 
 void MainMenu::OnKeyDown(const SDL_KeyboardEvent& kbe) {
-	switch (kbe.keysym.sym) {
-	case SDLK_ESCAPE:
-		mGame->EnterGameplay();
-		break;
-	}
+	mGame->EnterGameplay();
+	mGame->GetGameplayState()->LoadLevel();	
 }
 
 void MainMenu::OnMouseDown(const SDL_MouseButtonEvent& mbe) {
