@@ -16,7 +16,7 @@ Gameplay::Gameplay(Game* game)
 	: GameState(game)
 	, mLevelIndex(1)
 {
-	Gameplay::DrawHitboxes = true;
+	Gameplay::DrawHitboxes = false;
 	Gameplay::GodMode = false;
 }
 
