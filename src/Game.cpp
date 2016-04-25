@@ -12,7 +12,7 @@ bool Game::Initialize() {
 
 	// Set some window properties
 	System::SetWindowSize(50 * 16, 50 * 12);
-	System::SetWindowTitle("Dope-Nasty Stealth Game");
+	System::SetWindowTitle("DopeNasty Stealth Game");
 
 	// Get renderer
 	SDL_Renderer* renderer = System::GetRenderer();

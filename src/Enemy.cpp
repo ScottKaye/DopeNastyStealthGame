@@ -10,7 +10,7 @@ Enemy::Enemy(const Vec2& pos, const Texture* tex)
 	, mSeeing(false)
 	, mSeenTime(0)
 	, mVisionRange(200)
-	, mStupidity(300)
+	, mStupidity(150)
 {
 	SetHitRadius(10);
 }
